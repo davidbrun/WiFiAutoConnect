@@ -8,6 +8,7 @@
 package fr.davidbrun.wifiautoconnect.views;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MultipleGradientPaint.CycleMethod;
@@ -123,6 +124,18 @@ public class WiFiAnimatedIcon extends JComponent
         this.paintComponent(g);
     }
     
+    @Override
+    public void setSize(int x, int y)
+    {
+        this.setRadius(x);
+    }
+    
+    @Override
+    public void setSize(Dimension d)
+    {
+        this.setRadius(d.width);
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Constructors">
@@ -134,7 +147,7 @@ public class WiFiAnimatedIcon extends JComponent
      */
     public WiFiAnimatedIcon(Color parentBackground)
     {
-        this(0, parentBackground);
+        this(1, parentBackground);
     }
     /**
      * Create a WiFi animated icon that has the specified size
@@ -153,7 +166,7 @@ public class WiFiAnimatedIcon extends JComponent
         super.setSize(radius + 2, radius + 2);
         this.thickness = radius * 2 / 8;
         // Set the default state of the WiFi icon
-        this.iconPartStates = new State[] {State.BACKGROUND, State.BACKGROUND, State.BACKGROUND, State.BACKGROUND};
+        this.iconPartStates = new State[] { State.BACKGROUND, State.BACKGROUND, State.BACKGROUND, State.BACKGROUND };
     }
     
     // </editor-fold>
@@ -323,6 +336,28 @@ public class WiFiAnimatedIcon extends JComponent
         iconPartStates[2] = state;
         iconPartStates[3] = state;
         this.paintImmediately(this.getVisibleRect());
+    }
+    
+    /**
+     * Resize the WiFi icon with the specified radius
+     * 
+     * @param radius The new radius of the WiFi icon
+     */
+    public void setRadius(int radius)
+    {
+        this.radius = radius;
+        super.setSize(radius + 2, radius + 2);
+        this.paintImmediately(this.getVisibleRect());
+    }
+    
+    /**
+     * Get the size of the WiFi icon
+     * 
+     * @return The radius of the WiFi icon
+     */
+    public int getRadius()
+    {
+        return this.radius;
     }
     
     // </editor-fold>
