@@ -82,7 +82,7 @@ public class FrmMain extends javax.swing.JFrame
         row0_col0.add(Box.createRigidArea(new Dimension(0, 3)));
 	comboBoxProfile = new JComboBox();
 	row0_col0.add(comboBoxProfile);
-        comboBoxProfile.setMaximumSize(new Dimension(165, 22));
+        comboBoxProfile.setMaximumSize(new Dimension(165, 24));
         comboBoxProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
         comboBoxProfile.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         // The first row, right column
@@ -92,7 +92,7 @@ public class FrmMain extends javax.swing.JFrame
         row0_col1.add(label2);
         label2.setAlignmentX(Component.CENTER_ALIGNMENT);
         label2.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row0_col1.add(Box.createRigidArea(new Dimension(0, 5)));
+        row0_col1.add(Box.createRigidArea(new Dimension(0, 6)));
         labelConnectionState = new JLabel("Connecté !");
 	row0_col1.add(labelConnectionState);
         labelConnectionState.setAlignmentX(Component.CENTER_ALIGNMENT);
