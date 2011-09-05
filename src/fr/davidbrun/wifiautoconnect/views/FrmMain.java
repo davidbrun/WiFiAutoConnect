@@ -7,7 +7,7 @@
 
 package fr.davidbrun.wifiautoconnect.views;
 
-import java.awt.BorderLayout;
+import fr.davidbrun.wifiautoconnect.utils.I18nUtil;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -34,11 +34,13 @@ public class FrmMain extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Fields">
     
     // Swing components
+    private JLabel labelProfile;
+    private JLabel labelLabelConnectionState;
     private JButton buttonLaunchPause;
     private JButton buttonAutoManual;
     private JComboBox comboBoxProfile;
     private JLabel labelConnectionState;
-    private JLabel labelAuthState;
+    private JLabel labelAutoConnectState;
     private JLabel labelAuthMode;
     private WiFiAnimatedIcon wifiAnimatedIcon;
     private JLabel labelNotifications;
@@ -52,7 +54,10 @@ public class FrmMain extends javax.swing.JFrame
      */
     public FrmMain()
     {
+        // Build the GUI
         initComponents();
+        // Load the texts
+        initTextsI18n();
     }
     
     // </editor-fold>
@@ -76,11 +81,11 @@ public class FrmMain extends javax.swing.JFrame
         // The first row, left column
         JPanel row0_col0 = new JPanel();
         row0_col0.setLayout(new BoxLayout(row0_col0, BoxLayout.Y_AXIS));
-        JLabel label1 = new JLabel("Profil sélectionné :", SwingConstants.CENTER);
-	row0_col0.add(label1);
-        label1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        label1.setMinimumSize(new Dimension(215, 20));
+        labelProfile = new JLabel("Profil sélectionné :", SwingConstants.CENTER);
+	row0_col0.add(labelProfile);
+        labelProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelProfile.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        labelProfile.setMinimumSize(new Dimension(215, 20));
         row0_col0.add(Box.createRigidArea(new Dimension(0, 3)));
 	comboBoxProfile = new JComboBox();
 	row0_col0.add(comboBoxProfile);
@@ -90,11 +95,11 @@ public class FrmMain extends javax.swing.JFrame
         // The first row, right column
         JPanel row0_col1 = new JPanel();
         row0_col1.setLayout(new BoxLayout(row0_col1, BoxLayout.Y_AXIS));
-        JLabel label2 = new JLabel("État du réseau :", SwingConstants.CENTER);
-        row0_col1.add(label2);
-        label2.setAlignmentX(Component.CENTER_ALIGNMENT);
-        label2.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        label2.setMinimumSize(new Dimension(215, 20));
+        labelLabelConnectionState = new JLabel("État du réseau :", SwingConstants.CENTER);
+        row0_col1.add(labelLabelConnectionState);
+        labelLabelConnectionState.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelLabelConnectionState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        labelLabelConnectionState.setMinimumSize(new Dimension(215, 20));
         row0_col1.add(Box.createRigidArea(new Dimension(0, 6)));
         labelConnectionState = new JLabel("Connecté !", SwingConstants.CENTER);
 	row0_col1.add(labelConnectionState);
@@ -132,12 +137,12 @@ public class FrmMain extends javax.swing.JFrame
         buttonLaunchPause.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonLaunchPause.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         row2_col0.add(Box.createRigidArea(new Dimension(0, 3)));
-        labelAuthState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
-        row2_col0.add(labelAuthState);
-        labelAuthState.setForeground(Color.GRAY);
-        labelAuthState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelAuthState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelAuthState.setMinimumSize(new Dimension(215, 20));
+        labelAutoConnectState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
+        row2_col0.add(labelAutoConnectState);
+        labelAutoConnectState.setForeground(Color.GRAY);
+        labelAutoConnectState.setAlignmentX(Component.CENTER_ALIGNMENT);
+        labelAutoConnectState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        labelAutoConnectState.setMinimumSize(new Dimension(215, 20));
         // The last row, right column
         JPanel row2_col1 = new JPanel();
         row2_col1.setLayout(new BoxLayout(row2_col1, BoxLayout.Y_AXIS));
@@ -211,15 +216,15 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void buttonLaunchPause_MouseClicked(MouseEvent evt)
     {
-        if (buttonLaunchPause.getText().equalsIgnoreCase("Marche"))
+        if (buttonLaunchPause.getText().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Launch")))
         {
-            buttonLaunchPause.setText("Pause");
-            labelAuthState.setText("Auto Connect en marche");
+            buttonLaunchPause.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Pause"));
+            labelAutoConnectState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAutoConnectState.Launched"));
         }
-        else if (buttonLaunchPause.getText().equalsIgnoreCase("Pause"))
+        else if (buttonLaunchPause.getText().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Pause")))
         {
-            buttonLaunchPause.setText("Marche");
-            labelAuthState.setText("Auto Connect en pause");
+            buttonLaunchPause.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Launch"));
+            labelAutoConnectState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAutoConnectState.Paused"));
         }
     }
     /**
@@ -229,16 +234,33 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void buttonAutoManual_MouseClicked(MouseEvent evt)
     {
-        if (buttonAutoManual.getText().equalsIgnoreCase("Automatique"))
+        if (buttonAutoManual.getText().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Auto")))
         {
-            buttonAutoManual.setText("Manuel");
-            labelAuthMode.setText("Authentification automatique");
+            buttonAutoManual.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Manual"));
+            labelAuthMode.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAuthMode.Auto"));
         }
-        else if (buttonAutoManual.getText().equalsIgnoreCase("Manuel"))
+        else if (buttonAutoManual.getText().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Manual")))
         {
-            buttonAutoManual.setText("Automatique");
-            labelAuthMode.setText("Authentification manuelle");
+            buttonAutoManual.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Auto"));
+            labelAuthMode.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAuthMode.Manual"));
         }
+    }
+    
+    /**
+     * This method is called to change the displayed texts depending on the selected locale
+     */
+    private void initTextsI18n()
+    {
+        I18nUtil.getInstance().setLocale(this.getLocale().getLanguage(), this.getLocale().getCountry());
+//        I18nUtil.getInstance().setLocale("en", "US");
+        this.buttonAutoManual.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Manual"));
+        this.buttonLaunchPause.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Pause"));
+        this.labelAuthMode.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAuthMode.Auto"));
+        this.labelAutoConnectState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAutoConnectState.Launched"));
+        this.labelConnectionState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Disconnected"));
+        this.labelLabelConnectionState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelLabelConnectionState"));
+        this.labelNotifications.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelNotifications"));
+        this.labelProfile.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelProfile"));
     }
     
     // </editor-fold>
