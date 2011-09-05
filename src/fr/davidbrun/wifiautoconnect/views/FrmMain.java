@@ -8,6 +8,7 @@
 package fr.davidbrun.wifiautoconnect.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -64,42 +65,49 @@ public class FrmMain extends javax.swing.JFrame
     private void initComponents()
     {
         // Set the size of the window
-        this.setMinimumSize(new Dimension(450, 410));
+        this.setMinimumSize(new Dimension(450, 404));
         // Get the content pane
         Container pane = this.getContentPane();
         // No layout for the rows: manual placement
         pane.setLayout(null);
         
         // The first row
-        JPanel row0 = new JPanel(new BorderLayout());
+        JPanel row0 = new JPanel(null);
         // The first row, left column
         JPanel row0_col0 = new JPanel();
         row0_col0.setLayout(new BoxLayout(row0_col0, BoxLayout.Y_AXIS));
-        JLabel label1 = new JLabel("Profil sélectionné :");
+        JLabel label1 = new JLabel("Profil sélectionné :", SwingConstants.CENTER);
 	row0_col0.add(label1);
         label1.setAlignmentX(Component.CENTER_ALIGNMENT);
         label1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        label1.setMinimumSize(new Dimension(215, 20));
         row0_col0.add(Box.createRigidArea(new Dimension(0, 3)));
 	comboBoxProfile = new JComboBox();
 	row0_col0.add(comboBoxProfile);
-        comboBoxProfile.setMaximumSize(new Dimension(165, 24));
+        comboBoxProfile.setMaximumSize(new Dimension(155, 24));
         comboBoxProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
         comboBoxProfile.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         // The first row, right column
         JPanel row0_col1 = new JPanel();
         row0_col1.setLayout(new BoxLayout(row0_col1, BoxLayout.Y_AXIS));
-        JLabel label2 = new JLabel("État du réseau :");
+        JLabel label2 = new JLabel("État du réseau :", SwingConstants.CENTER);
         row0_col1.add(label2);
         label2.setAlignmentX(Component.CENTER_ALIGNMENT);
         label2.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        label2.setMinimumSize(new Dimension(215, 20));
         row0_col1.add(Box.createRigidArea(new Dimension(0, 6)));
-        labelConnectionState = new JLabel("Connecté !");
+        labelConnectionState = new JLabel("Connecté !", SwingConstants.CENTER);
 	row0_col1.add(labelConnectionState);
         labelConnectionState.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelConnectionState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        labelConnectionState.setMinimumSize(new Dimension(215, 20));
         // Add the components in the first row
-        row0.add(row0_col0, BorderLayout.LINE_START);
-        row0.add(row0_col1, BorderLayout.LINE_END);
+        row0.add(row0_col0);
+        row0.add(row0_col1);
+        row0_col0.setSize(new Dimension(215, 75));
+        row0_col1.setSize(new Dimension(215, 75));
+        row0_col0.setLocation(0, 0);
+        row0_col1.setLocation(215, 0);
         
         // The middle row
         JPanel row1 = new JPanel();
@@ -123,9 +131,10 @@ public class FrmMain extends javax.swing.JFrame
         buttonLaunchPause.setMaximumSize(new Dimension(140, 35));
         buttonLaunchPause.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonLaunchPause.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row2_col0.add(Box.createRigidArea(new Dimension(0, 5)));
+        row2_col0.add(Box.createRigidArea(new Dimension(0, 3)));
         labelAuthState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
         row2_col0.add(labelAuthState);
+        labelAuthState.setForeground(Color.GRAY);
         labelAuthState.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelAuthState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         labelAuthState.setMinimumSize(new Dimension(215, 20));
@@ -137,9 +146,10 @@ public class FrmMain extends javax.swing.JFrame
         buttonAutoManual.setMaximumSize(new Dimension(140, 35));
         buttonAutoManual.setAlignmentX(Component.CENTER_ALIGNMENT);
         buttonAutoManual.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row2_col1.add(Box.createRigidArea(new Dimension(0, 5)));
+        row2_col1.add(Box.createRigidArea(new Dimension(0, 3)));
         labelAuthMode = new JLabel("Authentification manuelle", SwingConstants.CENTER);
 	row2_col1.add(labelAuthMode);
+        labelAuthMode.setForeground(Color.GRAY);
         labelAuthMode.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelAuthMode.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         labelAuthMode.setMinimumSize(new Dimension(215, 20));
@@ -156,7 +166,7 @@ public class FrmMain extends javax.swing.JFrame
         pane.add(row1);
         pane.add(row2);
         // Manually size the rows
-        row0.setSize(330, 50);
+        row0.setSize(430, 50);
         row1.setSize(wifiAnimatedIcon.getWidth(), wifiAnimatedIcon.getHeight() + 15);
         row2.setSize(430, 75);
         // Manually place the rows
