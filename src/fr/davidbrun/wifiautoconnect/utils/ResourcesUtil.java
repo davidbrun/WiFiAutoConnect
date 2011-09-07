@@ -8,7 +8,6 @@
 package fr.davidbrun.wifiautoconnect.utils;
 
 import java.io.File;
-import java.net.URI;
 import java.net.URL;
 import javax.swing.ImageIcon;
 
@@ -30,24 +29,24 @@ public class ResourcesUtil
     /**
      * The file where is located the Marker Felt font delivered with the application
      */
-    public static final File MARKER_FELT_FONT;
+    public static final URL MARKER_FELT_FONT;
     
     static
     {
         RESOURCES_PATH = new File(fr.davidbrun.wifiautoconnect.utils.ResourcesUtil.class.getResource("/").getPath()).getParent() + "/resources";
-        URI urlFont = null;
+        URL urlMarkerFeltFont = null;
         URL urlAboutBoxImage = null;
         try
         {
             urlAboutBoxImage = new URL("file:" + RESOURCES_PATH + "/images/big_dark_shadow_blur_200x200.png");
-            urlFont = new URL("file:" + RESOURCES_PATH + "/fonts/MarkerFelt.pfb").toURI();
+            urlMarkerFeltFont = new URL("file:" + RESOURCES_PATH + "/fonts/MarkerFelt.pfb");
         }
         catch (Exception e)
         { }
         finally
         {
             ABOUT_BOX_IMAGE_PATH = new ImageIcon(urlAboutBoxImage);
-            MARKER_FELT_FONT = new File(urlFont);
+            MARKER_FELT_FONT = urlMarkerFeltFont;
         }
     }
 }

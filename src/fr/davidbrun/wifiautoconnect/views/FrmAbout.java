@@ -7,6 +7,7 @@
 
 package fr.davidbrun.wifiautoconnect.views;
 
+import fr.davidbrun.wifiautoconnect.utils.OSUtil;
 import fr.davidbrun.wifiautoconnect.utils.ResourcesUtil;
 import java.awt.Color;
 import java.awt.Component;
@@ -87,7 +88,7 @@ public class FrmAbout extends JDialog
         // Disable the ability to resize the frame
         this.setResizable(false);
         // Set a correct size to display all the content
-        this.setSize(650, 310);
+        this.setSize(650, (OSUtil.IS_MAC ? 310 : 320));
         // Set a title to the window
         this.setTitle("À propos de WiFi Auto Connect...");
         // Defaut operation on close
@@ -111,11 +112,11 @@ public class FrmAbout extends JDialog
         panelMain.add(row0);
         panelMain.add(row1);
         row0.setSize(650, 235);
-        row1.setSize(650, this.getHeight() - 255);
+        row1.setSize(650, this.getHeight() - (OSUtil.IS_MAC ? 255 : 265));
         row0.setLocation(0, 0);
         row1.setLocation(0, row0.getHeight());
         row0.setBackground(new Color(237, 237, 237));
-        row1.setBackground(new Color(215, 215, 215));
+        row1.setBackground(new Color(210, 210, 210));
         // The application icon
         labelLogo = new JLabel(ResourcesUtil.ABOUT_BOX_IMAGE_PATH);
         row0_col0.add(labelLogo);
@@ -129,7 +130,7 @@ public class FrmAbout extends JDialog
         labelCopyright = new JLabel("Copyright © 2011 David Brun");
         try
         {
-            labelAppName.setFont(Font.createFont(Font.BOLD, ResourcesUtil.MARKER_FELT_FONT).deriveFont(32f));
+            labelAppName.setFont(Font.createFont(Font.BOLD, ResourcesUtil.MARKER_FELT_FONT.openStream()).deriveFont(32f));
         }
         catch (Exception e)
         {
