@@ -14,5 +14,26 @@ package fr.davidbrun.wifiautoconnect.controllers;
  */
 public class FrmMainController
 {
+    // <editor-fold defaultstate="collapsed" desc="Constants">
     
+    /**
+     * The name of the application
+     */
+    public static final String APP_NAME = "WiFi Auto Connect";
+    /**
+     * The version of the application
+     */
+    public static final String APP_VERSION = "alpha";
+    /**
+     * The copyright of the application
+     */
+    public static final String APP_COPYRIGHT = "Copyright © 2011 David Brun";
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Fields">
+    
+    
+    
+    // </editor-fold>
 }

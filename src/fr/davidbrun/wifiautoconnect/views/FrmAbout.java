@@ -7,6 +7,8 @@
 
 package fr.davidbrun.wifiautoconnect.views;
 
+import fr.davidbrun.wifiautoconnect.controllers.FrmMainController;
+import fr.davidbrun.wifiautoconnect.utils.I18nUtil;
 import fr.davidbrun.wifiautoconnect.utils.OSUtil;
 import fr.davidbrun.wifiautoconnect.utils.ResourcesUtil;
 import java.awt.Color;
@@ -52,7 +54,7 @@ public class FrmAbout extends JDialog
     JLabel labelCopyright;
     JLabel hyperlinkCreatorWebSite;
     JLabel hyperlinkDocumentation;
-    JButton buttonOk;
+    JButton buttonEscape;
     
     // </editor-fold>
     
@@ -89,8 +91,6 @@ public class FrmAbout extends JDialog
         this.setResizable(false);
         // Set a correct size to display all the content
         this.setSize(650, (OSUtil.IS_MAC ? 310 : 320));
-        // Set a title to the window
-        this.setTitle("À propos de WiFi Auto Connect...");
         // Defaut operation on close
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(parent);
@@ -123,11 +123,11 @@ public class FrmAbout extends JDialog
         labelLogo.setSize(200, 200);
         labelLogo.setLocation(row0_col0.getWidth() / 2 - labelLogo.getWidth() / 2, row0_col0.getHeight() / 2 - labelLogo.getHeight() / 2);
         // Set texts
-        labelAppName = new JLabel("WiFi Auto Connect");
-        labelAppVersion = new JLabel("Version alpha");
-        labelUpdates = new JLabel("Wifi Auto Connect est à jour !");
-        labelDescription = new JTextArea("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.");
-        labelCopyright = new JLabel("Copyright © 2011 David Brun");
+        labelAppName = new JLabel(FrmMainController.APP_NAME);
+        labelAppVersion = new JLabel("");
+        labelUpdates = new JLabel("");
+        labelDescription = new JTextArea("");
+        labelCopyright = new JLabel(FrmMainController.APP_COPYRIGHT);
         try
         {
             labelAppName.setFont(Font.createFont(Font.BOLD, ResourcesUtil.MARKER_FELT_FONT.openStream()).deriveFont(32f));
@@ -163,21 +163,21 @@ public class FrmAbout extends JDialog
         row0_col1.add(labelCopyright);
         row0_col1.add(Box.createVerticalGlue());
         // The bottom row
-        hyperlinkCreatorWebSite = new JLabel("Site de l'éditeur");
+        hyperlinkCreatorWebSite = new JLabel("");
         hyperlinkCreatorWebSite.setForeground(new Color(20, 79, 174));
         hyperlinkCreatorWebSite.setBackground(Color.red);
-        buttonOk = new JButton("Fermer");
-        buttonOk.setMargin(new Insets(6, 0, 4, 0));
-        buttonOk.setPreferredSize(new Dimension(120, 20));
-        hyperlinkDocumentation = new JLabel("Documentation");
+        buttonEscape = new JButton("");
+        buttonEscape.setMargin(new Insets(6, 0, 4, 0));
+        buttonEscape.setPreferredSize(new Dimension(120, 20));
+        hyperlinkDocumentation = new JLabel("");
         hyperlinkDocumentation.setForeground(new Color(20, 79, 174));
         hyperlinkCreatorWebSite.setAlignmentY(Component.CENTER_ALIGNMENT);
-        buttonOk.setAlignmentY(Component.CENTER_ALIGNMENT);
+        buttonEscape.setAlignmentY(Component.CENTER_ALIGNMENT);
         hyperlinkDocumentation.setAlignmentY(Component.CENTER_ALIGNMENT);
         row1.add(Box.createHorizontalGlue());
         row1.add(hyperlinkCreatorWebSite);
         row1.add(Box.createHorizontalGlue());
-        row1.add(buttonOk);
+        row1.add(buttonEscape);
         row1.add(Box.createHorizontalGlue());
         row1.add(hyperlinkDocumentation);
         row1.add(Box.createHorizontalGlue());
@@ -193,6 +193,8 @@ public class FrmAbout extends JDialog
                 setVisible(false);
             }
         });
+        // Update internationalized texts
+        this.initTextsI18n();
     }
     
     /**
@@ -266,6 +268,21 @@ public class FrmAbout extends JDialog
         }
         catch (Exception e)
         {}
+    }
+    
+    /**
+     * This method is called to change the displayed texts depending on the selected locale
+     */
+    private void initTextsI18n()
+    {
+        // The locale is already set! (in the main window)
+        this.setTitle((!OSUtil.IS_MAC ? I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.windowTitle") : ""));
+        this.labelAppVersion.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.labelAppVersion") + FrmMainController.APP_VERSION);
+        this.labelUpdates.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.labelUpdates.UpToDate"));
+        this.labelDescription.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.labelDescription"));
+        this.hyperlinkCreatorWebSite.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.hyperlinkCreatorWebSite"));
+        this.buttonEscape.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.buttonEscape"));
+        this.hyperlinkDocumentation.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.hyperlinkDocumentation"));
     }
     
     // </editor-fold>
