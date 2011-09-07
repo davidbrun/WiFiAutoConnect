@@ -7,6 +7,11 @@
 
 package fr.davidbrun.wifiautoconnect.views;
 
+import com.apple.eawt.AboutHandler;
+import com.apple.eawt.AppEvent.AboutEvent;
+import com.apple.eawt.AppEvent.PreferencesEvent;
+import com.apple.eawt.Application;
+import com.apple.eawt.PreferencesHandler;
 import fr.davidbrun.wifiautoconnect.utils.I18nUtil;
 import fr.davidbrun.wifiautoconnect.utils.OSUtil;
 import java.awt.Color;
@@ -14,13 +19,14 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -234,6 +240,27 @@ public class FrmMain extends javax.swing.JFrame
         // Add the menu bar
         this.setJMenuBar(this.menuBar);
         
+        // Full integration of the application in Mac OS
+        if (OSUtil.IS_MAC)
+        {
+            Application.getApplication().setAboutHandler(new AboutHandler()
+            {
+                @Override
+                public void handleAbout(AboutEvent arg0)
+                {
+                    new FrmAbout(FrmMain.this, true).setVisible(true);
+                }
+            });
+            Application.getApplication().setPreferencesHandler(new PreferencesHandler()
+            {
+                @Override
+                public void handlePreferences(PreferencesEvent pe)
+                {
+                    // TODO: show the preferences window
+                }
+            });
+        }
+        
         // Set the other properties of the window
         this.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         this.setTitle("WiFi Auto Connect");
@@ -257,6 +284,14 @@ public class FrmMain extends javax.swing.JFrame
             public void mouseClicked(MouseEvent evt)
             {
                 buttonAutoManual_MouseClicked(evt);
+            }
+        });
+        menuHelp_About.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new FrmAbout(FrmMain.this, true).setVisible(true);
             }
         });
         
