@@ -40,7 +40,10 @@ import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
+import javax.swing.plaf.BorderUIResource;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  * Represent the main window of the application
@@ -60,6 +63,7 @@ public class FrmMain extends javax.swing.JFrame
     private JLabel labelAuthMode;
     private WiFiAnimatedIcon wifiAnimatedIcon;
     private JLabel labelNotifications;
+    private JLabel labelGroupSeparator;
     // Menu bar
     private JMenuBar menuBar;
     private JMenu menuFile;
@@ -129,19 +133,45 @@ public class FrmMain extends javax.swing.JFrame
         // The third row: profile + connection state
         JPanel row2 = new JPanel();
         row2.setLayout(new BoxLayout(row2, BoxLayout.X_AXIS));
-        labelProfile = new JLabel("SFR WiFi Public");
-        labelConnectionState = new JLabel("Connecté");
+        labelProfile = new JLabel("SFR WiFi Public", SwingConstants.CENTER);
+        labelConnectionState = new JLabel("Connecté", SwingConstants.CENTER);
         labelProfile.setFont(new Font(labelProfile.getFont().getName(), Font.BOLD, labelProfile.getFont().getSize()));
         labelConnectionState.setFont(new Font(labelConnectionState.getFont().getName(), Font.BOLD, labelConnectionState.getFont().getSize()));
-        row2.add(Box.createHorizontalGlue());
-        row2.add(labelProfile);
-        row2.add(Box.createHorizontalGlue());
-        row2.add(Box.createHorizontalGlue());
-        row2.add(labelConnectionState);
-        row2.add(Box.createHorizontalGlue());
+        labelGroupSeparator = new JLabel("-", SwingConstants.CENTER);
+        labelGroupSeparator.setFont(new Font(labelGroupSeparator.getFont().getName(), Font.BOLD, labelGroupSeparator.getFont().getSize()));
+        Dimension labelSeparatorDimension0 = new Dimension(8, 20);
+        labelGroupSeparator.setMinimumSize(labelSeparatorDimension0);
+        labelGroupSeparator.setMaximumSize(labelSeparatorDimension0);
+        labelGroupSeparator.setPreferredSize(labelSeparatorDimension0);
+        labelGroupSeparator.setSize(labelSeparatorDimension0);
+        Dimension colDimension0 = new Dimension((windowWidth - 19 - labelGroupSeparator.getWidth()) / 2 - 2, 20);
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.setMinimumSize(colDimension0);
+        p1.setMaximumSize(colDimension0);
+        p1.setPreferredSize(colDimension0);
+        p1.setSize(colDimension0);
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+        p2.setMinimumSize(colDimension0);
+        p2.setMaximumSize(colDimension0);
+        p2.setPreferredSize(colDimension0);
+        p2.setSize(colDimension0);
+        // Left and right columns
+        p1.add(Box.createHorizontalGlue());
+        p1.add(labelProfile);
+        p1.add(Box.createHorizontalGlue());
+        p2.add(Box.createHorizontalGlue());
+        p2.add(labelConnectionState);
+        p2.add(Box.createHorizontalGlue());
+        // The row
+        row2.add(p1);
+        row2.add(labelGroupSeparator);
+        row2.add(p2);
+        // THe border
         row2.setBorder(BorderFactory.createEtchedBorder());
         // Set the sizes
-        Dimension row2Dimension = new Dimension(windowWidth - 40, 45);
+        Dimension row2Dimension = new Dimension(windowWidth - 19, 45);
         row2.setMinimumSize(row2Dimension);
         row2.setMaximumSize(row2Dimension);
         row2.setPreferredSize(row2Dimension);
@@ -163,8 +193,13 @@ public class FrmMain extends javax.swing.JFrame
         labelAutoConnectState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
         labelAutoConnectState.setForeground(Color.GRAY);
         labelAutoConnectState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelAutoConnectState.setMinimumSize(new Dimension(windowWidth / 2, 15));
+        Dimension labelAutoConnectStateDimension = new Dimension(windowWidth / 2, 15);
+        labelAutoConnectState.setMinimumSize(labelAutoConnectStateDimension);
+        labelAutoConnectState.setMaximumSize(labelAutoConnectStateDimension);
+        labelAutoConnectState.setPreferredSize(labelAutoConnectStateDimension);
+        labelAutoConnectState.setSize(labelAutoConnectStateDimension);
         // Add components
+        row3_col0.add(Box.createVerticalGlue());
         row3_col0.add(Box.createVerticalGlue());
         row3_col0.add(buttonLaunchPause);
         row3_col0.add(Box.createRigidArea(new Dimension(0, 3)));
@@ -183,32 +218,67 @@ public class FrmMain extends javax.swing.JFrame
         labelAuthMode = new JLabel("Authentification manuelle", SwingConstants.CENTER);
         labelAuthMode.setForeground(Color.GRAY);
         labelAuthMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelAuthMode.setMinimumSize(new Dimension(windowWidth / 2, 15));
+        Dimension labelAuthModeDimension = new Dimension(windowWidth / 2, 15);
+        labelAuthMode.setMinimumSize(labelAuthModeDimension);
+        labelAuthMode.setMaximumSize(labelAuthModeDimension);
+        labelAuthMode.setPreferredSize(labelAuthModeDimension);
+        labelAuthMode.setSize(labelAuthModeDimension);
         // Add components
+        row3_col1.add(Box.createVerticalGlue());
         row3_col1.add(Box.createVerticalGlue());
         row3_col1.add(buttonAutoManual);
         row3_col1.add(Box.createRigidArea(new Dimension(0, 3)));
         row3_col1.add(labelAuthMode);
         row3_col1.add(Box.createVerticalGlue());
+        // A vertical border
+        JLabel labelSeparator1 = new JLabel();
+        Dimension labelSeparatorDimension1 = new Dimension(10, 70);
+        labelSeparator1.setMinimumSize(labelSeparatorDimension1);
+        labelSeparator1.setMaximumSize(labelSeparatorDimension1);
+        labelSeparator1.setPreferredSize(labelSeparatorDimension1);
+        labelSeparator1.setSize(labelSeparatorDimension1);
+        labelSeparator1.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        Dimension labelSeparatorDimension2 = new Dimension(6, 70);
+        JLabel labelSeparator2 = new JLabel();
+        labelSeparator2.setMinimumSize(labelSeparatorDimension2);
+        labelSeparator2.setMaximumSize(labelSeparatorDimension2);
+        labelSeparator2.setPreferredSize(labelSeparatorDimension2);
+        labelSeparator2.setSize(labelSeparatorDimension2);
+        labelSeparator2.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        JLabel labelSeparator3 = new JLabel();
+        labelSeparator3.setMinimumSize(labelSeparatorDimension1);
+        labelSeparator3.setMaximumSize(labelSeparatorDimension1);
+        labelSeparator3.setPreferredSize(labelSeparatorDimension1);
+        labelSeparator3.setSize(labelSeparatorDimension1);
+        labelSeparator3.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        row3.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        // Add borders
+        row3_col0.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+        row3_col1.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         
         // Add components
+        row3.add(labelSeparator1);
         row3.add(row3_col0);
+        row3.add(labelSeparator2);
         row3.add(row3_col1);
+        row3.add(labelSeparator3);
         // Set sizes
-        Dimension colDimension = new Dimension(windowWidth / 2, 70);
-        row3_col0.setPreferredSize(colDimension);
-        row3_col1.setPreferredSize(colDimension);
-        row3_col0.setSize(colDimension);
-        row3_col1.setSize(colDimension);
-        row3_col0.setMinimumSize(colDimension);
-        row3_col1.setMinimumSize(colDimension);
-        row3_col0.setMaximumSize(colDimension);
-        row3_col1.setMaximumSize(colDimension);
+        Dimension colDimension1 = new Dimension(windowWidth / 2 - 2 * labelSeparator1.getWidth() / 2 - labelSeparator2.getWidth() / 2, 70);
+        row3_col0.setPreferredSize(colDimension1);
+        row3_col1.setPreferredSize(colDimension1);
+        row3_col0.setSize(colDimension1);
+        row3_col1.setSize(colDimension1);
+        row3_col0.setMinimumSize(colDimension1);
+        row3_col1.setMinimumSize(colDimension1);
+        row3_col0.setMaximumSize(colDimension1);
+        row3_col1.setMaximumSize(colDimension1);
         Dimension row3Dimension = new Dimension(windowWidth, row3.getHeight());
         row3.setMinimumSize(row3Dimension);
         row3.setSize(row3Dimension);
         row3.setMaximumSize(row3Dimension);
         // Set the color
+        p1.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        p2.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         pane.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         row0.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         row2.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
@@ -220,10 +290,11 @@ public class FrmMain extends javax.swing.JFrame
         pane.add(row0);
         pane.add(Box.createRigidArea(new Dimension(0, 0)));
         pane.add(labelNotifications);
-        pane.add(Box.createRigidArea(new Dimension(0, 12)));
+        pane.add(Box.createRigidArea(new Dimension(0, 8)));
         pane.add(row2);
-        pane.add(Box.createRigidArea(new Dimension(0, 18)));
+        pane.add(Box.createRigidArea(new Dimension(0, 5)));
         pane.add(row3);
+        pane.add(Box.createRigidArea(new Dimension(0, 10)));
         
         // Create the menu
         this.menuFile = new JMenu("Fichier");
@@ -360,8 +431,8 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void initTextsI18n()
     {
-        this.setLocale(Locale.FRANCE);
-//        this.setLocale(Locale.UK);
+//        this.setLocale(Locale.FRANCE);
+        this.setLocale(Locale.UK);
         I18nUtil.getInstance().setLocale(this.getLocale().getLanguage(), this.getLocale().getCountry());
         this.buttonAutoManual.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonAutoManual.Manual"));
         this.buttonLaunchPause.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.buttonLaunchPause.Pause"));
@@ -370,6 +441,7 @@ public class FrmMain extends javax.swing.JFrame
         this.labelConnectionState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Disconnected"));
         this.labelNotifications.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelNotifications"));
         this.labelProfile.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelProfile.Color")));
+        this.labelGroupSeparator.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelGroupSeparator.Color")));
         this.labelConnectionState.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Color")));
         this.menuFile.setText((!OSUtil.IS_MAC ? "  " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile") + (!OSUtil.IS_MAC ? " " : ""));
         this.menuProfiles.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuProfiles") + (!OSUtil.IS_MAC ? " " : ""));
