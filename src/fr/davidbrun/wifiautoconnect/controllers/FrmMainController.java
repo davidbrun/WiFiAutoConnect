@@ -7,6 +7,8 @@
 
 package fr.davidbrun.wifiautoconnect.controllers;
 
+import java.awt.Color;
+
 /**
  * Represent the controller of the main window of the application
  *
@@ -28,6 +30,14 @@ public class FrmMainController
      * The copyright of the application
      */
     public static final String APP_COPYRIGHT = "Copyright © 2011 David Brun";
+    /**
+     * The background color of the top part of the windows of the application
+     */
+    public static final Color WINDOW_TOP_BACKGROUND = new Color(242, 242, 242);
+    /**
+     * The background color of the bottom part of the windows of the application
+     */
+    public static final Color WINDOW_BOTTOM_BACKGROUND = new Color(220, 220, 220);
     
     // </editor-fold>
     

@@ -17,7 +17,6 @@ import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -87,15 +86,17 @@ public class FrmAbout extends JDialog
      */
     private void initComponents(JFrame parent)
     {
+        // Attributes of the window
+        int windowWidth = 650;
+        
         // Disable the ability to resize the frame
         this.setResizable(false);
-        // Set a correct size to display all the content
-        this.setSize(650, (OSUtil.IS_MAC ? 310 : 320));
         // Defaut operation on close
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(parent);
         // Create the main panel of the window
-        panelMain = new JPanel(null);
+        panelMain = new JPanel();
+        panelMain.setLayout(new BoxLayout(panelMain, BoxLayout.Y_AXIS));
         // The swing components
         JPanel row0 = new JPanel(null);
         JPanel row0_col0 = new JPanel(null);
@@ -104,19 +105,23 @@ public class FrmAbout extends JDialog
         JPanel row1 = new JPanel();
         row1.setLayout(new BoxLayout(row1, BoxLayout.X_AXIS));
         row0_col0.setSize(270, 235);
-        row0_col1.setSize(650 - 270, 235);
+        row0_col1.setSize(windowWidth - row0_col0.getWidth(), row0_col0.getHeight());
         row0.add(row0_col0);
         row0.add(row0_col1);
         row0_col0.setLocation(0, 0);
-        row0_col1.setLocation(270, 0);
+        row0_col1.setLocation(row0_col0.getWidth(), 0);
         panelMain.add(row0);
         panelMain.add(row1);
-        row0.setSize(650, 235);
-        row1.setSize(650, this.getHeight() - (OSUtil.IS_MAC ? 255 : 265));
-        row0.setLocation(0, 0);
-        row1.setLocation(0, row0.getHeight());
-        row0.setBackground(new Color(237, 237, 237));
-        row1.setBackground(new Color(210, 210, 210));
+        Dimension row0Dimension = new Dimension(windowWidth, row0_col0.getHeight());
+        row0.setMinimumSize(row0Dimension);
+        row0.setMaximumSize(row0Dimension);
+        row0.setPreferredSize(row0Dimension);
+        row0.setSize(row0Dimension);
+        Dimension row1Dimension = new Dimension(windowWidth, 50);
+        row1.setMinimumSize(row1Dimension);
+        row1.setMaximumSize(row1Dimension);
+        row1.setPreferredSize(row1Dimension);
+        row1.setSize(row1Dimension);
         // The application icon
         labelLogo = new JLabel(ResourcesUtil.ABOUT_BOX_IMAGE_PATH);
         row0_col0.add(labelLogo);
@@ -134,18 +139,17 @@ public class FrmAbout extends JDialog
         }
         catch (Exception e)
         {
-            labelAppName.setFont(new Font(labelCopyright.getFont().getFontName(), Font.BOLD, 32));
+            labelAppName.setFont(new Font(labelAppName.getFont().getFontName(), Font.BOLD, 32));
         }
-        labelUpdates.setFont(new Font(labelCopyright.getFont().getFontName(), Font.ITALIC, 12));
+        labelUpdates.setFont(new Font(labelUpdates.getFont().getFontName(), Font.ITALIC, 12));
         labelUpdates.setForeground(Color.GRAY);
-        labelDescription.setFont(new Font(labelCopyright.getFont().getFontName(), Font.PLAIN, 11));
-        labelDescription.setMaximumSize(new Dimension(650 - 270 - 40, labelDescription.getHeight()));
+        labelDescription.setFont(new Font(labelUpdates.getFont().getFontName(), Font.PLAIN, 11));
+        labelDescription.setMaximumSize(new Dimension(windowWidth - row0_col0.getWidth() - 40, labelDescription.getHeight()));
         labelDescription.setLineWrap(true);
         labelDescription.setWrapStyleWord(true);
         labelDescription.setEditable(false);
         labelDescription.setFocusable(false);
         labelDescription.setDragEnabled(false);
-        labelDescription.setBackground(this.getBackground());
         // Set the alignment
         labelAppName.setAlignmentX(Component.LEFT_ALIGNMENT);
         labelAppVersion.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -165,10 +169,12 @@ public class FrmAbout extends JDialog
         // The bottom row
         hyperlinkCreatorWebSite = new JLabel("");
         hyperlinkCreatorWebSite.setForeground(new Color(20, 79, 174));
-        hyperlinkCreatorWebSite.setBackground(Color.red);
         buttonEscape = new JButton("");
-        buttonEscape.setMargin(new Insets(6, 0, 4, 0));
-        buttonEscape.setPreferredSize(new Dimension(120, 20));
+        Dimension buttonDimension = new Dimension(140, 35);
+        buttonEscape.setMinimumSize(buttonDimension);
+        buttonEscape.setMaximumSize(buttonDimension);
+        buttonEscape.setPreferredSize(buttonDimension);
+        buttonEscape.setSize(buttonDimension);
         hyperlinkDocumentation = new JLabel("");
         hyperlinkDocumentation.setForeground(new Color(20, 79, 174));
         hyperlinkCreatorWebSite.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -181,6 +187,12 @@ public class FrmAbout extends JDialog
         row1.add(Box.createHorizontalGlue());
         row1.add(hyperlinkDocumentation);
         row1.add(Box.createHorizontalGlue());
+        // Set colors
+        row0_col0.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        row0_col1.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        labelDescription.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
+        row1.setBackground(FrmMainController.WINDOW_BOTTOM_BACKGROUND);
+        
         // Add swing components
         this.setContentPane(panelMain);
         // Close the frame when typing ESC
@@ -195,6 +207,9 @@ public class FrmAbout extends JDialog
         });
         // Update internationalized texts
         this.initTextsI18n();
+        
+        // Pack before to display
+        this.pack();
     }
     
     /**
