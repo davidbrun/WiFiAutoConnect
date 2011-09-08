@@ -351,6 +351,16 @@ public class WiFiAnimatedIcon extends JComponent
     }
     
     /**
+     * Set the opening angle of the WiFi icon with the specified opening angle
+     * 
+     * @param openingAngle The opening angle of the WiFi icon
+     */
+    public void getOpeningAngle(int openingAngle)
+    {
+        this.openingAngle = openingAngle;
+    }
+    
+    /**
      * Get the size of the WiFi icon
      * 
      * @return The radius of the WiFi icon
@@ -358,6 +368,16 @@ public class WiFiAnimatedIcon extends JComponent
     public int getRadius()
     {
         return this.radius;
+    }
+    
+    /**
+     * Get the opening angle of the WiFi icon
+     * 
+     * @return The opening angle of the WiFi icon
+     */
+    public int getOpeningAngle()
+    {
+        return this.openingAngle;
     }
     
     // </editor-fold>

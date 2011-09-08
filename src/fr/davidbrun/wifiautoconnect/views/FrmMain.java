@@ -18,6 +18,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,6 +26,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -49,8 +51,6 @@ public class FrmMain extends javax.swing.JFrame
     // <editor-fold defaultstate="collapsed" desc="Fields">
     
     // Swing components
-    private JLabel labelLabelProfile;
-    private JLabel labelLabelConnectionState;
     private JButton buttonLaunchPause;
     private JButton buttonAutoManual;
     private JLabel labelProfile;
@@ -97,115 +97,128 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void initComponents()
     {
+        // Attributes of the window
+        int windowWidth = 450;
+        
         // Set the size of the window
-        this.setMinimumSize(new Dimension(450, (!OSUtil.IS_MAC ? 420 : 395)));
+//        this.setMinimumSize(new Dimension(windowWidth, (!OSUtil.IS_MAC ? 420 : 395)));
+        this.setBackground(new Color(237, 237, 237));
         // Get the content pane
         Container pane = this.getContentPane();
-        // No layout for the rows: manual placement
-        pane.setLayout(null);
+        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         
-        // The first row
-        JPanel row0 = new JPanel(null);
-        // The first row, left column
-        JPanel row0_col0 = new JPanel();
-        row0_col0.setLayout(new BoxLayout(row0_col0, BoxLayout.Y_AXIS));
-        labelLabelProfile = new JLabel("Profil sélectionné :", SwingConstants.CENTER);
-	row0_col0.add(labelLabelProfile);
-        labelLabelProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelLabelProfile.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelLabelProfile.setMinimumSize(new Dimension(215, 20));
-        row0_col0.add(Box.createRigidArea(new Dimension(0, 4)));
-	labelProfile = new JLabel("SFR WiFi Public", SwingConstants.CENTER);
-	row0_col0.add(labelProfile);
-        labelProfile.setMaximumSize(new Dimension(215, 20));
-        labelProfile.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelProfile.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        // The first row, right column
-        JPanel row0_col1 = new JPanel();
-        row0_col1.setLayout(new BoxLayout(row0_col1, BoxLayout.Y_AXIS));
-        labelLabelConnectionState = new JLabel("État du réseau :", SwingConstants.CENTER);
-        row0_col1.add(labelLabelConnectionState);
-        labelLabelConnectionState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelLabelConnectionState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelLabelConnectionState.setMinimumSize(new Dimension(215, 20));
-        row0_col1.add(Box.createRigidArea(new Dimension(0, 4)));
-        labelConnectionState = new JLabel("Connecté !", SwingConstants.CENTER);
-	row0_col1.add(labelConnectionState);
-        labelConnectionState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelConnectionState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelConnectionState.setMinimumSize(new Dimension(215, 20));
-        // Add the components in the first row
-        row0.add(row0_col0);
-        row0.add(row0_col1);
-        row0_col0.setSize(new Dimension(215, 75));
-        row0_col1.setSize(new Dimension(215, 75));
-        row0_col0.setLocation(0, 0);
-        row0_col1.setLocation(215, 0);
+        // The first row: wifi animated icon
+        JPanel row0 = new JPanel();
+        row0.setLayout(new BoxLayout(row0, BoxLayout.X_AXIS));
+        wifiAnimatedIcon = new WiFiAnimatedIcon(250, new Color(241, 241, 241));
+        wifiAnimatedIcon.setPreferredSize(new Dimension(152, 252));
+        row0.add(Box.createHorizontalGlue());
+        row0.add(wifiAnimatedIcon);
+        row0.add(Box.createHorizontalGlue());
         
-        // The middle row
-        JPanel row1 = new JPanel();
-        row1.setLayout(new BoxLayout(row1, BoxLayout.Y_AXIS));
-	wifiAnimatedIcon = new WiFiAnimatedIcon(200, this.getBackground());
-        wifiAnimatedIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
-        wifiAnimatedIcon.setAlignmentY(Component.TOP_ALIGNMENT);
-	row1.add(wifiAnimatedIcon);
+        // The second row: notifications
         labelNotifications = new JLabel("Notifications ici");
+        labelNotifications.setFont(new Font(labelNotifications.getFont().getFontName(), Font.ITALIC, labelNotifications.getFont().getSize()));
+        labelNotifications.setForeground(Color.GRAY);
         labelNotifications.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelNotifications.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row1.add(labelNotifications);
+        labelNotifications.setAlignmentY(Component.TOP_ALIGNMENT);
+        labelNotifications.setMinimumSize(new Dimension(windowWidth, 20));
         
-        // The last row
-        JPanel row2 = new JPanel(null);
+        // The third row: profile + connection state
+        JPanel row2 = new JPanel();
+        row2.setLayout(new BoxLayout(row2, BoxLayout.X_AXIS));
+        labelProfile = new JLabel("SFR WiFi Public");
+        labelConnectionState = new JLabel("Connecté !");
+        labelProfile.setFont(new Font(labelProfile.getFont().getName(), Font.BOLD, labelProfile.getFont().getSize()));
+        labelConnectionState.setFont(new Font(labelConnectionState.getFont().getName(), Font.BOLD, labelConnectionState.getFont().getSize()));
+        row2.add(Box.createHorizontalGlue());
+        row2.add(labelProfile);
+        row2.add(Box.createHorizontalGlue());
+        row2.add(Box.createHorizontalGlue());
+        row2.add(labelConnectionState);
+        row2.add(Box.createHorizontalGlue());
+        row2.setBorder(BorderFactory.createEtchedBorder());
+        // Set the sizes
+        Dimension row2Dimension = new Dimension(windowWidth - 40, 50);
+        row2.setMinimumSize(row2Dimension);
+        row2.setMaximumSize(row2Dimension);
+        row2.setPreferredSize(row2Dimension);
+        row2.setSize(row2Dimension);
+        
+        // Last row: buttons
+        JPanel row3 = new JPanel();
+        row3.setLayout(new BoxLayout(row3, BoxLayout.X_AXIS));
         // The last row, left column
-        JPanel row2_col0 = new JPanel();
-        row2_col0.setLayout(new BoxLayout(row2_col0, BoxLayout.Y_AXIS));
+        JPanel row3_col0 = new JPanel();
+        row3_col0.setLayout(new BoxLayout(row3_col0, BoxLayout.Y_AXIS));
         buttonLaunchPause = new JButton("Marche");
-	row2_col0.add(buttonLaunchPause);
-        buttonLaunchPause.setMaximumSize(new Dimension(140, 35));
+        Dimension buttonLaunchPauseDimension = new Dimension(140, 35);
+        buttonLaunchPause.setSize(buttonLaunchPauseDimension);
+        buttonLaunchPause.setMinimumSize(buttonLaunchPauseDimension);
+        buttonLaunchPause.setMaximumSize(buttonLaunchPauseDimension);
+        buttonLaunchPause.setPreferredSize(buttonLaunchPauseDimension);
         buttonLaunchPause.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonLaunchPause.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row2_col0.add(Box.createRigidArea(new Dimension(0, 3)));
         labelAutoConnectState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
-        row2_col0.add(labelAutoConnectState);
         labelAutoConnectState.setForeground(Color.GRAY);
         labelAutoConnectState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelAutoConnectState.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelAutoConnectState.setMinimumSize(new Dimension(215, 20));
+        labelAutoConnectState.setMinimumSize(new Dimension(windowWidth / 2, 20));
+        // Add components
+        row3_col0.add(Box.createVerticalGlue());
+        row3_col0.add(buttonLaunchPause);
+        row3_col0.add(Box.createRigidArea(new Dimension(0, 1)));
+        row3_col0.add(labelAutoConnectState);
+        row3_col0.add(Box.createVerticalGlue());
         // The last row, right column
-        JPanel row2_col1 = new JPanel();
-        row2_col1.setLayout(new BoxLayout(row2_col1, BoxLayout.Y_AXIS));
+        JPanel row3_col1 = new JPanel();
+        row3_col1.setLayout(new BoxLayout(row3_col1, BoxLayout.Y_AXIS));
 	buttonAutoManual = new JButton("Automatique");
-	row2_col1.add(buttonAutoManual);
-        buttonAutoManual.setMaximumSize(new Dimension(140, 35));
+        Dimension buttonAutoManualDimension = new Dimension(140, 35);
+        buttonAutoManual.setSize(buttonAutoManualDimension);
+        buttonAutoManual.setMinimumSize(buttonAutoManualDimension);
+        buttonAutoManual.setMaximumSize(buttonAutoManualDimension);
+        buttonAutoManual.setPreferredSize(buttonAutoManualDimension);
         buttonAutoManual.setAlignmentX(Component.CENTER_ALIGNMENT);
-        buttonAutoManual.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        row2_col1.add(Box.createRigidArea(new Dimension(0, 3)));
         labelAuthMode = new JLabel("Authentification manuelle", SwingConstants.CENTER);
-	row2_col1.add(labelAuthMode);
         labelAuthMode.setForeground(Color.GRAY);
         labelAuthMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        labelAuthMode.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-        labelAuthMode.setMinimumSize(new Dimension(215, 20));
-        // Add the components in the last row
-        row2.add(row2_col0);
-        row2.add(row2_col1);
-        row2_col0.setSize(new Dimension(215, 75));
-        row2_col1.setSize(new Dimension(215, 75));
-        row2_col0.setLocation(0, 0);
-        row2_col1.setLocation(215, 0);
+        labelAuthMode.setMinimumSize(new Dimension(windowWidth / 2, 20));
+        // Add components
+        row3_col1.add(Box.createVerticalGlue());
+        row3_col1.add(buttonAutoManual);
+        row3_col1.add(Box.createRigidArea(new Dimension(0, 1)));
+        row3_col1.add(labelAuthMode);
+        row3_col1.add(Box.createVerticalGlue());
         
-        // Add the rows to the content pane
+        // Add components
+        row3.add(row3_col0);
+        row3.add(row3_col1);
+        // Set sizes
+        Dimension colDimension = new Dimension(windowWidth / 2, 70);
+        row3_col0.setPreferredSize(colDimension);
+        row3_col1.setPreferredSize(colDimension);
+        row3_col0.setSize(colDimension);
+        row3_col1.setSize(colDimension);
+        row3_col0.setMinimumSize(colDimension);
+        row3_col1.setMinimumSize(colDimension);
+        row3_col0.setMaximumSize(colDimension);
+        row3_col1.setMaximumSize(colDimension);
+        Dimension row3Dimension = new Dimension(windowWidth, row3.getHeight());
+        row3.setMinimumSize(row3Dimension);
+        row3.setSize(row3Dimension);
+        row3.setMaximumSize(row3Dimension);
+        // Set colors
+        row3_col0.setBackground(new Color(210, 210, 210));
+        row3_col1.setBackground(new Color(210, 210, 210));
+        
+        // Add components
+        pane.add(Box.createRigidArea(new Dimension(0, 15)));
         pane.add(row0);
-        pane.add(row1);
+        pane.add(Box.createRigidArea(new Dimension(0, 0)));
+        pane.add(labelNotifications);
+        pane.add(Box.createRigidArea(new Dimension(0, 15)));
         pane.add(row2);
-        // Manually size the rows
-        row0.setSize(430, 50);
-        row1.setSize(wifiAnimatedIcon.getWidth(), wifiAnimatedIcon.getHeight() + 15);
-        row2.setSize(430, 75);
-        // Manually place the rows
-        row0.setLocation((this.getWidth() - row0.getWidth()) / 2, 15);
-        row1.setLocation((this.getWidth() - row1.getWidth()) / 2 - 2, 75);
-        row2.setLocation((this.getWidth() - row2.getWidth()) / 2, wifiAnimatedIcon.getHeight() + 110);
+        pane.add(Box.createRigidArea(new Dimension(0, 20)));
+        pane.add(row3);
         
         // Create the menu
         this.menuFile = new JMenu("Fichier");
@@ -350,9 +363,9 @@ public class FrmMain extends javax.swing.JFrame
         this.labelAuthMode.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAuthMode.Auto"));
         this.labelAutoConnectState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelAutoConnectState.Launched"));
         this.labelConnectionState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Disconnected"));
-        this.labelLabelConnectionState.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelLabelConnectionState"));
         this.labelNotifications.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelNotifications"));
-        this.labelLabelProfile.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelLabelProfile"));
+        this.labelProfile.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelProfile.Color")));
+        this.labelConnectionState.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Color")));
         this.menuFile.setText((!OSUtil.IS_MAC ? "  " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile") + (!OSUtil.IS_MAC ? " " : ""));
         this.menuProfiles.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuProfiles") + (!OSUtil.IS_MAC ? " " : ""));
         this.menuHelp.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp") + (!OSUtil.IS_MAC ? " " : ""));
