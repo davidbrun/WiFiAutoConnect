@@ -21,6 +21,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URI;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -69,12 +71,25 @@ public class FrmAbout extends JDialog
         
         // Initialize the SWING components
         this.initComponents(parent);
+        this.getContentPane().setVisible(false);
+        this.setVisible(false);
         
         // Add listeners to the SWING components
         this.addListeners();
         
         // Center the about box in the main frame
         this.centerFrameInParent(parent);
+        
+        // Avoid blinks
+        this.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowOpened(WindowEvent e)
+            {
+                getContentPane().setVisible(true);
+                setVisible(true);
+            }
+        });
     }
     
     // </editor-fold>
@@ -217,49 +232,60 @@ public class FrmAbout extends JDialog
      */
     private void addListeners()
     {
+        // OK button
+        this.buttonEscape.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                setVisible(false);
+            }
+        });
+        
+        // Hyperlink behavior
         this.hyperlinkCreatorWebSite.addMouseListener(new MouseAdapter()
         {
             @Override
-            public void mouseReleased(MouseEvent arg0)
+            public void mouseReleased(MouseEvent e)
             {
                 browseToWebSite();
             }
 
             @Override
-            public void mouseExited(MouseEvent arg0)
+            public void mouseExited(MouseEvent e)
             {
                 hyperlinkCreatorWebSite.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
             @Override
-            public void mouseEntered(MouseEvent arg0)
+            public void mouseEntered(MouseEvent e)
             {
                 hyperlinkCreatorWebSite.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
         });
-        
         this.hyperlinkDocumentation.addMouseListener(new MouseAdapter()
         {
             @Override
-            public void mouseReleased(MouseEvent arg0)
+            public void mouseReleased(MouseEvent e)
             {
                 // TODO: open the documentation
             }
 
             @Override
-            public void mouseExited(MouseEvent arg0)
+            public void mouseExited(MouseEvent e)
             {
                 hyperlinkDocumentation.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
 
             @Override
-            public void mouseEntered(MouseEvent arg0)
+            public void mouseEntered(MouseEvent e)
             {
                 hyperlinkDocumentation.setCursor(new Cursor(Cursor.HAND_CURSOR));
             }
         });
     }
     /**
+     * Center the window in the parent window
      * 
      * @param parent The parent window
      */
