@@ -138,7 +138,7 @@ public class FrmAbout extends JDialog
         row1.setPreferredSize(row1Dimension);
         row1.setSize(row1Dimension);
         // The application icon
-        labelLogo = new JLabel(ResourcesUtil.ABOUT_BOX_IMAGE_PATH);
+        labelLogo = new JLabel(ResourcesUtil.ABOUT_BOX_IMAGE_ICON);
         row0_col0.add(labelLogo);
         labelLogo.setSize(200, 200);
         labelLogo.setLocation(row0_col0.getWidth() / 2 - labelLogo.getWidth() / 2, row0_col0.getHeight() / 2 - labelLogo.getHeight() / 2);
