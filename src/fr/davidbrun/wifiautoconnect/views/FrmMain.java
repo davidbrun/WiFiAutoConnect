@@ -9,7 +9,9 @@ package fr.davidbrun.wifiautoconnect.views;
 
 import com.apple.eawt.AboutHandler;
 import com.apple.eawt.AppEvent.AboutEvent;
+import com.apple.eawt.AppEvent.AppReOpenedEvent;
 import com.apple.eawt.AppEvent.PreferencesEvent;
+import com.apple.eawt.AppReOpenedListener;
 import com.apple.eawt.Application;
 import com.apple.eawt.PreferencesHandler;
 import fr.davidbrun.wifiautoconnect.controllers.FrmMainController;
@@ -366,6 +368,15 @@ public class FrmMain extends javax.swing.JFrame
                     // TODO: show the preferences window
                 }
             });
+            Application.getApplication().addAppEventListener(new AppReOpenedListener()
+            {
+                @Override
+                public void appReOpened(AppReOpenedEvent aroe)
+                {
+                    setState(FrmMain.NORMAL);
+                    setVisible(true);
+                }
+            });
         }
         
         // Pack before to display
@@ -571,7 +582,14 @@ public class FrmMain extends javax.swing.JFrame
                 @Override
                 public void actionPerformed(ActionEvent e)
                 {
-                    
+                    if (popupMenu_PauseStart.getLabel().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Start")))
+                    {
+                        popupMenu_PauseStart.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Pause"));
+                    }
+                    else if (popupMenu_PauseStart.getLabel().equalsIgnoreCase(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Pause")))
+                    {
+                        popupMenu_PauseStart.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Start"));
+                    }
                 }
             });
             this.popupMenu.add(this.popupMenu_ShowApp);
