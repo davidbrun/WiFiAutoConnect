@@ -433,7 +433,8 @@ public class FrmMain extends javax.swing.JFrame
         this.setIconImage(ResourcesUtil.APPLICATION_IMAGE);
         // Just hide
         this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        
+        // Add the tooltip of the system tray
+        this.updateSystemTrayToolTip();
         // Center the window on the screen
         this.setLocationRelativeTo(null);
     }
@@ -631,6 +632,14 @@ public class FrmMain extends javax.swing.JFrame
         }
         else // If there is no system tray, we don't do anything
         { }
+    }
+    
+    /**
+     * Update the tool tip of the system tray depending on the state of the connection
+     */
+    private void updateSystemTrayToolTip()
+    {
+        this.systemTray.setToolTip(FrmMainController.APP_NAME + " " + FrmMainController.APP_VERSION + "\n" + "SFR WiFi Public : Connecté");
     }
     
     // </editor-fold>
