@@ -17,7 +17,7 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 /**
- * Provides a graphical component that displays a WiFi animated icon
+ * Provide a graphical component that displays a WiFi animated icon
  * 
  * @author David Brun <brundavid@gmail.com>
  */

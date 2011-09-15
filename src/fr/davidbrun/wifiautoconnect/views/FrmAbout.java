@@ -127,16 +127,8 @@ public class FrmAbout extends JDialog
         row0_col1.setLocation(row0_col0.getWidth(), 0);
         panelMain.add(row0);
         panelMain.add(row1);
-        Dimension row0Dimension = new Dimension(windowWidth, row0_col0.getHeight());
-        row0.setMinimumSize(row0Dimension);
-        row0.setMaximumSize(row0Dimension);
-        row0.setPreferredSize(row0Dimension);
-        row0.setSize(row0Dimension);
-        Dimension row1Dimension = new Dimension(windowWidth, 50);
-        row1.setMinimumSize(row1Dimension);
-        row1.setMaximumSize(row1Dimension);
-        row1.setPreferredSize(row1Dimension);
-        row1.setSize(row1Dimension);
+        setSize(row0, new Dimension(windowWidth, row0_col0.getHeight()));
+        setSize(row1, new Dimension(windowWidth, 50));
         // The application icon
         labelLogo = new JLabel(ResourcesUtil.ABOUT_BOX_IMAGE_ICON);
         row0_col0.add(labelLogo);
@@ -185,11 +177,7 @@ public class FrmAbout extends JDialog
         hyperlinkCreatorWebSite = new JLabel("");
         hyperlinkCreatorWebSite.setForeground(new Color(20, 79, 174));
         buttonEscape = new JButton("");
-        Dimension buttonDimension = new Dimension(140, 35);
-        buttonEscape.setMinimumSize(buttonDimension);
-        buttonEscape.setMaximumSize(buttonDimension);
-        buttonEscape.setPreferredSize(buttonDimension);
-        buttonEscape.setSize(buttonDimension);
+        setSize(buttonEscape, new Dimension(140, 35));
         hyperlinkDocumentation = new JLabel("");
         hyperlinkDocumentation.setForeground(new Color(20, 79, 174));
         hyperlinkCreatorWebSite.setAlignmentY(Component.CENTER_ALIGNMENT);
@@ -324,6 +312,20 @@ public class FrmAbout extends JDialog
         this.hyperlinkCreatorWebSite.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.hyperlinkCreatorWebSite"));
         this.buttonEscape.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.buttonEscape"));
         this.hyperlinkDocumentation.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmAbout.hyperlinkDocumentation"));
+    }
+    
+    /**
+     * Fix the size of a swing component
+     * 
+     * @param target The component to fix the size
+     * @param d The new size of the component
+     */
+    private void setSize(JComponent target, Dimension d)
+    {
+        target.setMinimumSize(d);
+        target.setMaximumSize(d);
+        target.setPreferredSize(d);
+        target.setSize(d);
     }
     
     // </editor-fold>

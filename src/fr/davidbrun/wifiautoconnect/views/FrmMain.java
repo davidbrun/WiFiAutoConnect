@@ -38,6 +38,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -145,11 +146,7 @@ public class FrmMain extends javax.swing.JFrame
         labelNotifications.setForeground(Color.GRAY);
         labelNotifications.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelNotifications.setAlignmentY(Component.TOP_ALIGNMENT);
-        Dimension labelDimension = new Dimension(windowWidth, 15);
-        labelNotifications.setMinimumSize(labelDimension);
-        labelNotifications.setMaximumSize(labelDimension);
-        labelNotifications.setPreferredSize(labelDimension);
-        labelNotifications.setSize(labelDimension);
+        setSize(labelNotifications, new Dimension(windowWidth, 15));
         
         // The third row: profile + connection state
         JPanel row2 = new JPanel();
@@ -160,24 +157,14 @@ public class FrmMain extends javax.swing.JFrame
         labelConnectionState.setFont(new Font(labelConnectionState.getFont().getName(), Font.BOLD, labelConnectionState.getFont().getSize()));
         labelGroupSeparator = new JLabel("-", SwingConstants.CENTER);
         labelGroupSeparator.setFont(new Font(labelGroupSeparator.getFont().getName(), Font.BOLD, labelGroupSeparator.getFont().getSize()));
-        Dimension labelSeparatorDimension0 = new Dimension(8, 20);
-        labelGroupSeparator.setMinimumSize(labelSeparatorDimension0);
-        labelGroupSeparator.setMaximumSize(labelSeparatorDimension0);
-        labelGroupSeparator.setPreferredSize(labelSeparatorDimension0);
-        labelGroupSeparator.setSize(labelSeparatorDimension0);
+        setSize(labelGroupSeparator, new Dimension(8, 20));
         Dimension colDimension0 = new Dimension((windowWidth - 19 - labelGroupSeparator.getWidth()) / 2 - 2, 20);
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
-        p1.setMinimumSize(colDimension0);
-        p1.setMaximumSize(colDimension0);
-        p1.setPreferredSize(colDimension0);
-        p1.setSize(colDimension0);
+        setSize(p1, colDimension0);
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-        p2.setMinimumSize(colDimension0);
-        p2.setMaximumSize(colDimension0);
-        p2.setPreferredSize(colDimension0);
-        p2.setSize(colDimension0);
+        setSize(p2, colDimension0);
         // Left and right columns
         p1.add(Box.createHorizontalGlue());
         p1.add(labelProfile);
@@ -192,11 +179,7 @@ public class FrmMain extends javax.swing.JFrame
         // THe border
         row2.setBorder(BorderFactory.createEtchedBorder());
         // Set the sizes
-        Dimension row2Dimension = new Dimension(windowWidth - 19, 45);
-        row2.setMinimumSize(row2Dimension);
-        row2.setMaximumSize(row2Dimension);
-        row2.setPreferredSize(row2Dimension);
-        row2.setSize(row2Dimension);
+        setSize(row2, new Dimension(windowWidth - 19, 45));
         
         // Last row: buttons
         JPanel row3 = new JPanel();
@@ -205,20 +188,12 @@ public class FrmMain extends javax.swing.JFrame
         JPanel row3_col0 = new JPanel();
         row3_col0.setLayout(new BoxLayout(row3_col0, BoxLayout.Y_AXIS));
         buttonLaunchPause = new JButton("Marche");
-        Dimension buttonLaunchPauseDimension = new Dimension(140, 35);
-        buttonLaunchPause.setSize(buttonLaunchPauseDimension);
-        buttonLaunchPause.setMinimumSize(buttonLaunchPauseDimension);
-        buttonLaunchPause.setMaximumSize(buttonLaunchPauseDimension);
-        buttonLaunchPause.setPreferredSize(buttonLaunchPauseDimension);
+        setSize(buttonLaunchPause, new Dimension(140, 35));
         buttonLaunchPause.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelAutoConnectState = new JLabel("Auto Connect en pause", SwingConstants.CENTER);
         labelAutoConnectState.setForeground(Color.GRAY);
         labelAutoConnectState.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Dimension labelAutoConnectStateDimension = new Dimension(windowWidth / 2, 15);
-        labelAutoConnectState.setMinimumSize(labelAutoConnectStateDimension);
-        labelAutoConnectState.setMaximumSize(labelAutoConnectStateDimension);
-        labelAutoConnectState.setPreferredSize(labelAutoConnectStateDimension);
-        labelAutoConnectState.setSize(labelAutoConnectStateDimension);
+        setSize(labelAutoConnectState, new Dimension(windowWidth / 2, 15));
         // Add components
         row3_col0.add(Box.createVerticalGlue());
         row3_col0.add(Box.createVerticalGlue());
@@ -230,20 +205,12 @@ public class FrmMain extends javax.swing.JFrame
         JPanel row3_col1 = new JPanel();
         row3_col1.setLayout(new BoxLayout(row3_col1, BoxLayout.Y_AXIS));
 	buttonAutoManual = new JButton("Automatique");
-        Dimension buttonAutoManualDimension = new Dimension(140, 35);
-        buttonAutoManual.setSize(buttonAutoManualDimension);
-        buttonAutoManual.setMinimumSize(buttonAutoManualDimension);
-        buttonAutoManual.setMaximumSize(buttonAutoManualDimension);
-        buttonAutoManual.setPreferredSize(buttonAutoManualDimension);
+        setSize(buttonAutoManual, new Dimension(140, 35));
         buttonAutoManual.setAlignmentX(Component.CENTER_ALIGNMENT);
         labelAuthMode = new JLabel("Authentification manuelle", SwingConstants.CENTER);
         labelAuthMode.setForeground(Color.GRAY);
         labelAuthMode.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Dimension labelAuthModeDimension = new Dimension(windowWidth / 2, 15);
-        labelAuthMode.setMinimumSize(labelAuthModeDimension);
-        labelAuthMode.setMaximumSize(labelAuthModeDimension);
-        labelAuthMode.setPreferredSize(labelAuthModeDimension);
-        labelAuthMode.setSize(labelAuthModeDimension);
+        setSize(labelAuthMode, new Dimension(windowWidth / 2, 15));
         // Add components
         row3_col1.add(Box.createVerticalGlue());
         row3_col1.add(Box.createVerticalGlue());
@@ -252,47 +219,31 @@ public class FrmMain extends javax.swing.JFrame
         row3_col1.add(labelAuthMode);
         row3_col1.add(Box.createVerticalGlue());
         // A vertical border
+        JLabel labelSeparator0 = new JLabel();
+        Dimension labelSeparatorDimension = new Dimension(10, 70);
+        setSize(labelSeparator0, labelSeparatorDimension);
+        labelSeparator0.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         JLabel labelSeparator1 = new JLabel();
-        Dimension labelSeparatorDimension1 = new Dimension(10, 70);
-        labelSeparator1.setMinimumSize(labelSeparatorDimension1);
-        labelSeparator1.setMaximumSize(labelSeparatorDimension1);
-        labelSeparator1.setPreferredSize(labelSeparatorDimension1);
-        labelSeparator1.setSize(labelSeparatorDimension1);
+        setSize(labelSeparator1, new Dimension(6, 70));
         labelSeparator1.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
-        Dimension labelSeparatorDimension2 = new Dimension(6, 70);
         JLabel labelSeparator2 = new JLabel();
-        labelSeparator2.setMinimumSize(labelSeparatorDimension2);
-        labelSeparator2.setMaximumSize(labelSeparatorDimension2);
-        labelSeparator2.setPreferredSize(labelSeparatorDimension2);
-        labelSeparator2.setSize(labelSeparatorDimension2);
+        setSize(labelSeparator2, labelSeparatorDimension);
         labelSeparator2.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
-        JLabel labelSeparator3 = new JLabel();
-        labelSeparator3.setMinimumSize(labelSeparatorDimension1);
-        labelSeparator3.setMaximumSize(labelSeparatorDimension1);
-        labelSeparator3.setPreferredSize(labelSeparatorDimension1);
-        labelSeparator3.setSize(labelSeparatorDimension1);
-        labelSeparator3.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         row3.setBackground(FrmMainController.WINDOW_TOP_BACKGROUND);
         // Add borders
         row3_col0.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         row3_col1.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
         
         // Add components
-        row3.add(labelSeparator1);
+        row3.add(labelSeparator0);
         row3.add(row3_col0);
-        row3.add(labelSeparator2);
+        row3.add(labelSeparator1);
         row3.add(row3_col1);
-        row3.add(labelSeparator3);
+        row3.add(labelSeparator2);
         // Set sizes
-        Dimension colDimension1 = new Dimension(windowWidth / 2 - 2 * labelSeparator1.getWidth() / 2 - labelSeparator2.getWidth() / 2, 70);
-        row3_col0.setPreferredSize(colDimension1);
-        row3_col1.setPreferredSize(colDimension1);
-        row3_col0.setSize(colDimension1);
-        row3_col1.setSize(colDimension1);
-        row3_col0.setMinimumSize(colDimension1);
-        row3_col1.setMinimumSize(colDimension1);
-        row3_col0.setMaximumSize(colDimension1);
-        row3_col1.setMaximumSize(colDimension1);
+        Dimension colDimension1 = new Dimension(windowWidth / 2 - 2 * labelSeparator0.getWidth() / 2 - labelSeparator1.getWidth() / 2, 70);
+        setSize(row3_col0, colDimension1);
+        setSize(row3_col1, colDimension1);
         Dimension row3Dimension = new Dimension(windowWidth, row3.getHeight());
         row3.setMinimumSize(row3Dimension);
         row3.setSize(row3Dimension);
@@ -640,6 +591,20 @@ public class FrmMain extends javax.swing.JFrame
     private void updateSystemTrayToolTip()
     {
         this.systemTray.setToolTip(FrmMainController.APP_NAME + " " + FrmMainController.APP_VERSION + "\n" + "SFR WiFi Public : Connecté");
+    }
+    
+    /**
+     * Fix the size of a swing component
+     * 
+     * @param target The component to fix the size
+     * @param d The new size of the component
+     */
+    private void setSize(JComponent target, Dimension d)
+    {
+        target.setMinimumSize(d);
+        target.setMaximumSize(d);
+        target.setPreferredSize(d);
+        target.setSize(d);
     }
     
     // </editor-fold>
