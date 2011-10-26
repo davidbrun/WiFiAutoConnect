@@ -318,7 +318,7 @@ public class FrmMain extends javax.swing.JFrame
                 @Override
                 public void handlePreferences(PreferencesEvent pe)
                 {
-                    // TODO: show the preferences window
+                    new FrmParameters(FrmMain.this, true).setVisible(true);
                 }
             });
             Application.getApplication().addAppEventListener(new AppReOpenedListener()
@@ -373,7 +373,7 @@ public class FrmMain extends javax.swing.JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                // TODO: show the preferences window
+                new FrmParameters(FrmMain.this, true).setVisible(true);
             }
         });
         
@@ -547,6 +547,14 @@ public class FrmMain extends javax.swing.JFrame
                     {
                         popupMenu_PauseStart.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Start"));
                     }
+                }
+            });
+            this.popupMenu_Parameters.addActionListener( new ActionListener()
+            {
+                @Override
+                public void actionPerformed(ActionEvent e)
+                {
+                    new FrmParameters(FrmMain.this, true).setVisible(true);
                 }
             });
             this.popupMenu.add(this.popupMenu_ShowApp);
