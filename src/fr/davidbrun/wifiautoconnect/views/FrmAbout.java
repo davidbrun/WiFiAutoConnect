@@ -61,12 +61,18 @@ public class FrmAbout extends JDialog
     
     // <editor-fold defaultstate="collapsed" desc="Constructor">
     
+    /**
+     * Create a new about box dialog
+     * 
+     * @param parent The parent frame of this dialog window
+     * @param modal The modality of the dialog window
+     */
     public FrmAbout(JFrame parent, boolean modal)
     {
         // The JDialog enable the frame to be modal
         super(parent, modal);
         
-        //First make sure the parent frame is visible
+        // First make sure the parent frame is visible
         parent.setVisible(true);
         
         // Initialize the SWING components
@@ -98,6 +104,8 @@ public class FrmAbout extends JDialog
     
     /**
      * Initialize the Swing components
+     * 
+     * @param parent The parent frame of this dialog window
      */
     private void initComponents(JFrame parent)
     {
