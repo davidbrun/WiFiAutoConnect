@@ -206,16 +206,7 @@ public class FrmAbout extends JDialog
         
         // Add swing components
         this.setContentPane(panelMain);
-        // Close the frame when typing ESC
-        panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Exit");
-        panelMain.getActionMap().put("Exit", new AbstractAction()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                setVisible(false);
-            }
-        });
+        
         // Update internationalized texts
         this.initTextsI18n();
         
@@ -228,6 +219,17 @@ public class FrmAbout extends JDialog
      */
     private void addListeners()
     {
+        // Close the frame when typing ESC
+        this.panelMain.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "Exit");
+        this.panelMain.getActionMap().put("Exit", new AbstractAction()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                setVisible(false);
+            }
+        });
+        
         // OK button
         this.buttonEscape.addMouseListener(new MouseAdapter()
         {
