@@ -31,6 +31,10 @@ public class FrmMainController
      */
     public static final String APP_COPYRIGHT = "Copyright © 2011 David Brun";
     /**
+     * The background color of the header part of the windows of the application
+     */
+    public static final Color WINDOW_HEADER_BACKGROUND = new Color(251, 251, 251);
+    /**
      * The background color of the top part of the windows of the application
      */
     public static final Color WINDOW_TOP_BACKGROUND = new Color(242, 242, 242);
