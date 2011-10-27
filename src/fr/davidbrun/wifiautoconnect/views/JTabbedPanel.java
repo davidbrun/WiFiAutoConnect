@@ -1,5 +1,5 @@
 /*
- * File:   TabbedPanel.java
+ * File:   JTabbedPanel.java
  * Author: David Brun <brundavid@gmail.com>
  *
  * Created on 12 sept. 2011, 11:43:30
@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * 
  * @author David Brun <brundavid@gmail.com>
  */
-public class TabbedPanel extends JPanel
+public class JTabbedPanel extends JPanel
 {
     // <editor-fold defaultstate="collapsed" desc="Constants">
     
@@ -68,7 +68,7 @@ public class TabbedPanel extends JPanel
      * 
      * @param d The size of the tabbed panel
      */
-    public TabbedPanel(Dimension d)
+    public JTabbedPanel(Dimension d)
     {
         this(d, 0);
     }
@@ -78,7 +78,7 @@ public class TabbedPanel extends JPanel
      * @param d The size of the tabbed panel
      * @param numberOfTabPanels The number of desired tab panels
      */
-    public TabbedPanel(Dimension d, int numberOfTabPanels)
+    public JTabbedPanel(Dimension d, int numberOfTabPanels)
     {
         super();
         

@@ -103,7 +103,7 @@ public class FrmParameters extends JDialog
         panelMain.setLayout(new BoxLayout(panelMain, BoxLayout.Y_AXIS));
         
         // Create the tabbed panel
-        TabbedPanel tabbedPanel = new TabbedPanel(dimension);
+        JTabbedPanel tabbedPanel = new JTabbedPanel(dimension);
         tabbedPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         tabbedPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelMain.add(tabbedPanel);

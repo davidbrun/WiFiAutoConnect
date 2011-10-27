@@ -44,7 +44,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -275,19 +274,28 @@ public class FrmMain extends javax.swing.JFrame
         this.menuFile_Parameters = new JMenuItem("Paramètres");
         this.menuFile_Quit = new JMenuItem("Quitter");
         this.menuFile.add(this.menuFile_Parameters);
-        this.menuFile.add(new JSeparator());
+        if (OSUtil.IS_WINDOWS)
+            this.menuFile.addSeparator();
+        else
+            this.menuFile.add(new JSeparatorExt());
         this.menuFile.add(this.menuFile_Quit);
         this.menuHelp_Update = new JMenuItem("Vérifier les mises à jour");
         this.menuHelp_Doc = new JMenuItem("Documentation");
         this.menuHelp_FAQ = new JMenuItem("FAQ");
         this.menuHelp_About = new JMenuItem("À propos de WiFi Auto Connect");
         this.menuHelp.add(this.menuHelp_Update);
-        this.menuHelp.add(new JSeparator());
+        if (OSUtil.IS_WINDOWS)
+            this.menuHelp.addSeparator();
+        else
+            this.menuHelp.add(new JSeparatorExt());
         this.menuHelp.add(this.menuHelp_Doc);
         this.menuHelp.add(this.menuHelp_FAQ);
         if (!OSUtil.IS_MAC) // On mac os, the About menu is present in the application menu
         {
-            this.menuHelp.add(new JSeparator());
+            if (OSUtil.IS_WINDOWS)
+                this.menuHelp.addSeparator();
+            else
+                this.menuHelp.add(new JSeparatorExt());
             this.menuHelp.add(this.menuHelp_About);
         }
         this.menuBar = new JMenuBar();
@@ -447,12 +455,12 @@ public class FrmMain extends javax.swing.JFrame
         this.menuFile.setText((!OSUtil.IS_MAC ? "  " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile") + (!OSUtil.IS_MAC ? " " : ""));
         this.menuProfiles.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuProfiles") + (!OSUtil.IS_MAC ? " " : ""));
         this.menuHelp.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp") + (!OSUtil.IS_MAC ? " " : ""));
-        this.menuFile_Parameters.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Parameters"));
-        this.menuFile_Quit.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Quit"));
-        this.menuHelp_Update.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Update"));
-        this.menuHelp_Doc.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Doc"));
-        this.menuHelp_FAQ.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_FAQ"));
-        this.menuHelp_About.setText(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_About"));
+        this.menuFile_Parameters.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Parameters"));
+        this.menuFile_Quit.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Quit"));
+        this.menuHelp_Update.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Update"));
+        this.menuHelp_Doc.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Doc"));
+        this.menuHelp_FAQ.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_FAQ"));
+        this.menuHelp_About.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_About"));
         this.popupMenu_ShowApp.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_ShowApp"));
         this.popupMenu_PauseStart.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Pause"));
         this.popupMenu_Profiles.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Profiles"));
