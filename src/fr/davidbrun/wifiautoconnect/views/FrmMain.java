@@ -443,7 +443,7 @@ public class FrmMain extends javax.swing.JFrame
         // Remember the different indentations to integrate better in different OS's
         String notMacLargeIndentation = (!OSUtil.IS_MAC ? "  " : "");
         String notMacSmallIndentation = (!OSUtil.IS_MAC ? " " : "");
-        String linuxLargeIndentation = (OSUtil.IS_LINUX ? "      " : "");
+        String linuxLargeIndentation = (OSUtil.IS_LINUX ? "     " : "");
         String linuxSmallIndentation = (OSUtil.IS_LINUX ? "     " : "");
 
         this.setLocale(Locale.FRANCE);
@@ -534,8 +534,9 @@ public class FrmMain extends javax.swing.JFrame
             this.popupMenu_Blanc4 = new GenericMenuItemSeparator(menuItemSeparatorType);
             this.popupMenu_Quit = new GenericMenuItem(menuItemType, "Quitter");
             
-            // Display the top item in bold
-            this.popupMenu_ShowApp.setFont(new Font(menuProfiles.getFont().getName(), Font.BOLD, menuProfiles.getFont().getSize()));
+            // Display the top item in bold only on Windows
+            if (OSUtil.IS_WINDOWS)
+                this.popupMenu_ShowApp.setFont(new Font(menuProfiles.getFont().getName(), Font.BOLD, menuProfiles.getFont().getSize()));
             
             this.popupMenu_Quit.addActionListener( new ActionListener()
             {
