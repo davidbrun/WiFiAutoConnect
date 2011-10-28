@@ -42,6 +42,10 @@ public class FrmMainController
      * The background color of the bottom part of the windows of the application
      */
     public static final Color WINDOW_BOTTOM_BACKGROUND = new Color(220, 220, 220);
+    /**
+     * The line separator related to the OS on which the application runs
+     */
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
     
     // </editor-fold>
     

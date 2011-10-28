@@ -627,7 +627,10 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void updateSystemTrayToolTip()
     {
-        this.systemTray.setToolTip(FrmMainController.APP_NAME + " " + FrmMainController.APP_VERSION + "\n" + "SFR WiFi Public : Connecté");
+        if (OSUtil.IS_LINUX)
+            this.systemTray.setToolTip("SFR WiFi Public : Connecté");
+        else
+            this.systemTray.setToolTip(FrmMainController.APP_NAME + " " + FrmMainController.APP_VERSION + FrmMainController.LINE_SEPARATOR + "SFR WiFi Public : Connecté");
     }
     
     /**
