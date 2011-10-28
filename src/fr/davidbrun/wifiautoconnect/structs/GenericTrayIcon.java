@@ -30,7 +30,7 @@ public class GenericTrayIcon
      */
     public enum TrayIconType { /** Represent the DEFAULT tray icon */ DEFAULT, /** Represent the CUSTOM tray icon */ CUSTOM };
     
-    // <editor-fold defaultstate="uncollapsed" desc="Fields">
+    // <editor-fold defaultstate="collapsed" desc="Fields">
     
     // To store the real tray icon and its type
     private TrayIcon defaultTrayIcon;
@@ -39,7 +39,7 @@ public class GenericTrayIcon
     
     // </editor-fold>
     
-    // <editor-fold defaultstate="uncollapsed" desc="Constructor">
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     
     /**
      * Create a generic tray icon of the specfified type, with the specified image, tooltip and popup menu
@@ -65,7 +65,7 @@ public class GenericTrayIcon
     
     // </editor-fold>
     
-    // <editor-fold defaultstate="uncollapsed" desc="Public methods">
+    // <editor-fold defaultstate="collapsed" desc="Public methods">
     
     /**
      * Set the auto-size property of the tray icon

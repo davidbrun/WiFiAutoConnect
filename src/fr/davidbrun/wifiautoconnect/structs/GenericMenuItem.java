@@ -26,7 +26,7 @@ public class GenericMenuItem
      */
     public enum MenuItemType { /** Represent a AWT menu item */ AWT, /** Represent a SWING menu item */ SWING };
     
-    // <editor-fold defaultstate="uncollapsed" desc="Fields">
+    // <editor-fold defaultstate="collapsed" desc="Fields">
     
     // To store the real menu item and its type
     private MenuItem awtMenuItem;
@@ -35,7 +35,7 @@ public class GenericMenuItem
     
     // </editor-fold>
     
-    // <editor-fold defaultstate="uncollapsed" desc="Constructor">
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     
     /**
      * Create a generic menu item of the specfified type, with the specified caption
@@ -55,7 +55,7 @@ public class GenericMenuItem
     
     // </editor-fold>
     
-    // <editor-fold defaultstate="uncollapsed" desc="Public methods">
+    // <editor-fold defaultstate="collapsed" desc="Public methods">
     
     /**
      * Add the specified action listener to the menu item
