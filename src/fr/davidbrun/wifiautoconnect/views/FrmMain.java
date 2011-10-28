@@ -48,8 +48,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  * Represent the main window of the application
@@ -645,35 +643,6 @@ public class FrmMain extends javax.swing.JFrame
         target.setMaximumSize(d);
         target.setPreferredSize(d);
         target.setSize(d);
-    }
-    
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="Public methods">
-    
-    /**
-     * The entry point of the application
-     * 
-     * @param args The command line arguments
-     */
-    public static void main(String args[])
-    {
-        // Try to set the system Look and Feel
-        try
-        {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e) { }
-        
-        // Start up the GUI
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                new FrmMain().setVisible(true);
-            }
-        });
     }
     
     // </editor-fold>
