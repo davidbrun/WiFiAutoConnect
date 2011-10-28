@@ -7,6 +7,7 @@
 
 package fr.davidbrun.wifiautoconnect.views;
 
+import fr.davidbrun.wifiautoconnect.utils.OSUtil;
 import javax.swing.*;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
@@ -25,11 +26,29 @@ public class JTrayIcon extends TrayIcon
     // <editor-fold defaultstate="collapsed" desc="Fields">
     
     private JPopupMenu popupMenu;
-    private static JWindow window;
+    private static Window window;
+    private static Container container;
+    private static JWindow jWindow;
+    private static JDialog jDialog;
     static
     {
-        window = new JWindow();
-        window.setAlwaysOnTop(true);
+        if (OSUtil.IS_LINUX)
+        {
+            jWindow = new JWindow((Frame)null);
+            jWindow.setAlwaysOnTop(true);
+            jDialog = null;
+            window = jWindow;
+            container = jWindow.getContentPane();
+        }
+        else
+        {
+            jWindow = null;
+            jDialog = new JDialog((Frame)null, "TrayIcon");
+            jDialog.setUndecorated(true);
+            jDialog.setAlwaysOnTop(true);
+            window = jDialog;
+            container = jDialog.getContentPane();
+        }
     }
     
     private static PopupMenuListener popupListener = new PopupMenuListener()
@@ -70,7 +89,7 @@ public class JTrayIcon extends TrayIcon
             {
                 showJPopupMenu(e);
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e)
             {
@@ -97,8 +116,8 @@ public class JTrayIcon extends TrayIcon
             int adjustedAdjustedY = (adjustedY < 0 ? e.getY() : adjustedY);
             window.setLocation(e.getXOnScreen(), adjustedAdjustedY);
             window.setVisible(true);
-            popupMenu.show(window.getContentPane(), 0, (e.getY() < this.getSize().height ? this.getSize().height - adjustedAdjustedY : 0));
-            window.toFront();
+            popupMenu.show(container, 0, (e.getY() < this.getSize().height ? this.getSize().height - adjustedAdjustedY : 0));
+            jWindow.toFront();
         }
     }
     
