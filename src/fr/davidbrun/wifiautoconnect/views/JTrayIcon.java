@@ -22,13 +22,14 @@ import java.awt.event.MouseEvent;
  */
 public class JTrayIcon extends TrayIcon
 {
+    // <editor-fold defaultstate="collapsed" desc="Fields">
+    
     private JPopupMenu popupMenu;
-    private static JDialog dialog;
+    private static JWindow window;
     static
     {
-        dialog = new JDialog((Frame) null, "TrayDialog");
-        dialog.setUndecorated(true);
-        dialog.setAlwaysOnTop(true);
+        window = new JWindow();
+        window.setAlwaysOnTop(true);
     }
     
     private static PopupMenuListener popupListener = new PopupMenuListener()
@@ -40,15 +41,19 @@ public class JTrayIcon extends TrayIcon
         @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent e)
         {
-            dialog.setVisible(false);
+            window.setVisible(false);
         }
 
         @Override
         public void popupMenuCanceled(PopupMenuEvent e)
         {
-            dialog.setVisible(false);
+            window.setVisible(false);
         }
     };
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Constructor">
     
     /**
      * Create an new SWING tray icon, with the specified image
@@ -74,6 +79,10 @@ public class JTrayIcon extends TrayIcon
         });
     }
     
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Private methods">
+    
     /**
      * Show the SWING popup menu attached to the tray icon
      * 
@@ -85,12 +94,17 @@ public class JTrayIcon extends TrayIcon
         {
             Dimension size = popupMenu.getPreferredSize();
             int adjustedY = e.getY() - size.height;
-            dialog.setLocation(e.getXOnScreen(), adjustedY < 0 ? e.getY() : adjustedY);
-            dialog.setVisible(true);
-            popupMenu.show(dialog.getContentPane(), 0, 0);
-            dialog.toFront();
+            int adjustedAdjustedY = (adjustedY < 0 ? e.getY() : adjustedY);
+            window.setLocation(e.getXOnScreen(), adjustedAdjustedY);
+            window.setVisible(true);
+            popupMenu.show(window.getContentPane(), 0, (e.getY() < this.getSize().height ? this.getSize().height - adjustedAdjustedY : 0));
+            window.toFront();
         }
     }
+    
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Public methods">
     
     /**
      * Get the SWING popup menu attached to the tray icon
@@ -115,4 +129,6 @@ public class JTrayIcon extends TrayIcon
         this.popupMenu = popupMenu;
         popupMenu.addPopupMenuListener(popupListener);
     }
+    
+    // </editor-fold>
 }
