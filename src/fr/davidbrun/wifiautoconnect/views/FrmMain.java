@@ -15,6 +15,10 @@ import com.apple.eawt.AppReOpenedListener;
 import com.apple.eawt.Application;
 import com.apple.eawt.PreferencesHandler;
 import fr.davidbrun.wifiautoconnect.controllers.FrmMainController;
+import fr.davidbrun.wifiautoconnect.structs.GenericMenuItem;
+import fr.davidbrun.wifiautoconnect.structs.GenericMenuItemSeparator;
+import fr.davidbrun.wifiautoconnect.structs.GenericPopupMenu;
+import fr.davidbrun.wifiautoconnect.structs.GenericTrayIcon;
 import fr.davidbrun.wifiautoconnect.utils.I18nUtil;
 import fr.davidbrun.wifiautoconnect.utils.OSUtil;
 import fr.davidbrun.wifiautoconnect.utils.ResourcesUtil;
@@ -23,8 +27,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.MenuItem;
-import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
@@ -80,19 +82,19 @@ public class FrmMain extends javax.swing.JFrame
     private JMenuItem menuHelp_FAQ;
     private JMenuItem menuHelp_About;
     // The system tray
-    private TrayIcon systemTray;
+    private GenericTrayIcon systemTray;
     // The popup menu of the system tray
-    private PopupMenu popupMenu;
-    private MenuItem popupMenu_ShowApp;
-    private MenuItem popupMenu_PauseStart;
-    private MenuItem popupMenu_Profiles;
-    private MenuItem popupMenu_Logs;
-    private MenuItem popupMenu_Parameters;
-    private MenuItem popupMenu_Quit;
-    private MenuItem popupMenu_Blanc1;
-    private MenuItem popupMenu_Blanc2;
-    private MenuItem popupMenu_Blanc3;
-    private MenuItem popupMenu_Blanc4;
+    private GenericPopupMenu popupMenu;
+    private GenericMenuItem popupMenu_ShowApp;
+    private GenericMenuItem popupMenu_PauseStart;
+    private GenericMenuItem popupMenu_Profiles;
+    private GenericMenuItem popupMenu_Logs;
+    private GenericMenuItem popupMenu_Parameters;
+    private GenericMenuItem popupMenu_Quit;
+    private GenericMenuItemSeparator popupMenu_Blanc1;
+    private GenericMenuItemSeparator popupMenu_Blanc2;
+    private GenericMenuItemSeparator popupMenu_Blanc3;
+    private GenericMenuItemSeparator popupMenu_Blanc4;
     
     // </editor-fold>
     
@@ -120,9 +122,6 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void initComponents()
     {
-        // Create the system tray
-        this.addApplicationSystemTray();
-        
         // Attributes of the window
         int windowWidth = 450;
         
@@ -385,6 +384,9 @@ public class FrmMain extends javax.swing.JFrame
             }
         });
         
+        // Create the system tray
+        this.addApplicationSystemTray();
+        
         // Set the other properties of the window
         FrmMain.setDefaultLookAndFeelDecorated(true);
         this.setTitle(FrmMainController.APP_NAME);
@@ -440,6 +442,12 @@ public class FrmMain extends javax.swing.JFrame
      */
     private void initTextsI18n()
     {
+        // Remember the different indentations to integrate better in different OS's
+        String notMacLargeIndentation = (!OSUtil.IS_MAC ? "  " : "");
+        String notMacSmallIndentation = (!OSUtil.IS_MAC ? " " : "");
+        String linuxLargeIndentation = (OSUtil.IS_LINUX ? "      " : "");
+        String linuxSmallIndentation = (OSUtil.IS_LINUX ? "     " : "");
+
         this.setLocale(Locale.FRANCE);
 //        this.setLocale(Locale.UK);
         I18nUtil.getInstance().setLocale(this.getLocale().getLanguage(), this.getLocale().getCountry());
@@ -452,21 +460,21 @@ public class FrmMain extends javax.swing.JFrame
         this.labelProfile.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelProfile.Color")));
         this.labelGroupSeparator.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelGroupSeparator.Color")));
         this.labelConnectionState.setForeground(Color.decode(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.labelConnectionState.Color")));
-        this.menuFile.setText((!OSUtil.IS_MAC ? "  " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile") + (!OSUtil.IS_MAC ? " " : ""));
-        this.menuProfiles.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuProfiles") + (!OSUtil.IS_MAC ? " " : ""));
-        this.menuHelp.setText((!OSUtil.IS_MAC ? " " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp") + (!OSUtil.IS_MAC ? " " : ""));
-        this.menuFile_Parameters.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Parameters"));
-        this.menuFile_Quit.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Quit"));
-        this.menuHelp_Update.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Update"));
-        this.menuHelp_Doc.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Doc"));
-        this.menuHelp_FAQ.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_FAQ"));
-        this.menuHelp_About.setText((OSUtil.IS_LINUX ? "      " : "") + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_About"));
-        this.popupMenu_ShowApp.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_ShowApp"));
-        this.popupMenu_PauseStart.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Pause"));
-        this.popupMenu_Profiles.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Profiles"));
-        this.popupMenu_Logs.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Logs"));
-        this.popupMenu_Parameters.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Parameters"));
-        this.popupMenu_Quit.setLabel(I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Quit"));
+        this.menuFile.setText(notMacLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile") + notMacSmallIndentation);
+        this.menuProfiles.setText(notMacSmallIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuProfiles") + notMacSmallIndentation);
+        this.menuHelp.setText(notMacSmallIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp") + notMacSmallIndentation);
+        this.menuFile_Parameters.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Parameters"));
+        this.menuFile_Quit.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuFile_Quit"));
+        this.menuHelp_Update.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Update"));
+        this.menuHelp_Doc.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_Doc"));
+        this.menuHelp_FAQ.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_FAQ"));
+        this.menuHelp_About.setText(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.menuHelp_About"));
+        this.popupMenu_ShowApp.setLabel(linuxSmallIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_ShowApp"));
+        this.popupMenu_PauseStart.setLabel(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_PauseStart.Pause"));
+        this.popupMenu_Profiles.setLabel(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Profiles"));
+        this.popupMenu_Logs.setLabel(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Logs"));
+        this.popupMenu_Parameters.setLabel(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Parameters"));
+        this.popupMenu_Quit.setLabel(linuxLargeIndentation + I18nUtil.getInstance().getI18nMsg("fr.davidbrun.wifiautoconnect.views.FrmMain.popupMenu_Quit"));
         this.setMenuBarMnemonics();
     }
     
@@ -513,17 +521,23 @@ public class FrmMain extends javax.swing.JFrame
             SystemTray tray = SystemTray.getSystemTray();
             
             // Create the popup menu of the system tray
-            this.popupMenu = new PopupMenu();
-            this.popupMenu_ShowApp = new MenuItem("Réduire l'application");
-            this.popupMenu_Blanc1 = new MenuItem("-");
-            this.popupMenu_PauseStart = new MenuItem("Pause");
-            this.popupMenu_Blanc2 = new MenuItem("-");
-            this.popupMenu_Profiles = new MenuItem("Profils");
-            this.popupMenu_Blanc3 = new MenuItem("-");
-            this.popupMenu_Logs = new MenuItem("Consulter les logs");
-            this.popupMenu_Parameters = new MenuItem("Paramètres");
-            this.popupMenu_Blanc4 = new MenuItem("-");
-            this.popupMenu_Quit = new MenuItem("Quitter");
+            GenericPopupMenu.PopupMenuType popupMenuType = (OSUtil.IS_MAC ? GenericPopupMenu.PopupMenuType.AWT : GenericPopupMenu.PopupMenuType.SWING);
+            this.popupMenu = new GenericPopupMenu(popupMenuType, "");
+            GenericMenuItem.MenuItemType menuItemType = (OSUtil.IS_MAC ? GenericMenuItem.MenuItemType.AWT : GenericMenuItem.MenuItemType.SWING);
+            GenericMenuItemSeparator.MenuItemSeparatorType menuItemSeparatorType = (OSUtil.IS_MAC ? GenericMenuItemSeparator.MenuItemSeparatorType.AWT : GenericMenuItemSeparator.MenuItemSeparatorType.SWING);
+            this.popupMenu_ShowApp = new GenericMenuItem(menuItemType, "Afficher l'application");
+            this.popupMenu_Blanc1 = new GenericMenuItemSeparator(menuItemSeparatorType);
+            this.popupMenu_PauseStart = new GenericMenuItem(menuItemType, "Pause");
+            this.popupMenu_Blanc2 = new GenericMenuItemSeparator(menuItemSeparatorType);
+            this.popupMenu_Profiles = new GenericMenuItem(menuItemType, "Profils");
+            this.popupMenu_Blanc3 = new GenericMenuItemSeparator(menuItemSeparatorType);
+            this.popupMenu_Logs = new GenericMenuItem(menuItemType, "Consulter les logs");
+            this.popupMenu_Parameters = new GenericMenuItem(menuItemType, "Paramètres");
+            this.popupMenu_Blanc4 = new GenericMenuItemSeparator(menuItemSeparatorType);
+            this.popupMenu_Quit = new GenericMenuItem(menuItemType, "Quitter");
+            
+            // Display the top item in bold
+            this.popupMenu_ShowApp.setFont(new Font(menuProfiles.getFont().getName(), Font.BOLD, menuProfiles.getFont().getSize()));
             
             this.popupMenu_Quit.addActionListener( new ActionListener()
             {
@@ -565,19 +579,23 @@ public class FrmMain extends javax.swing.JFrame
                     new FrmParameters(FrmMain.this, true).setVisible(true);
                 }
             });
-            this.popupMenu.add(this.popupMenu_ShowApp);
-            this.popupMenu.add(this.popupMenu_Blanc1);
-            this.popupMenu.add(this.popupMenu_PauseStart);
-            this.popupMenu.add(this.popupMenu_Blanc2);
-            this.popupMenu.add(this.popupMenu_Profiles);
-            this.popupMenu.add(this.popupMenu_Blanc3);
-            this.popupMenu.add(this.popupMenu_Logs);
-            this.popupMenu.add(this.popupMenu_Parameters);
-            this.popupMenu.add(this.popupMenu_Blanc4);
-            this.popupMenu.add(this.popupMenu_Quit);
+            this.popupMenu.addMenuItem(this.popupMenu_ShowApp);
+            this.popupMenu.addMenuItemSeparator(this.popupMenu_Blanc1);
+            this.popupMenu.addMenuItem(this.popupMenu_PauseStart);
+            this.popupMenu.addMenuItemSeparator(this.popupMenu_Blanc2);
+            this.popupMenu.addMenuItem(this.popupMenu_Profiles);
+            this.popupMenu.addMenuItemSeparator(this.popupMenu_Blanc3);
+            this.popupMenu.addMenuItem(this.popupMenu_Logs);
+            this.popupMenu.addMenuItem(this.popupMenu_Parameters);
+            this.popupMenu.addMenuItemSeparator(this.popupMenu_Blanc4);
+            this.popupMenu.addMenuItem(this.popupMenu_Quit);
             
             // Create the system tray
-            systemTray = new TrayIcon(ResourcesUtil.SYSTEM_TRAY_IMAGE_ICON.getImage(), FrmMainController.APP_NAME, this.popupMenu);
+            GenericTrayIcon.TrayIconType trayIconType = (OSUtil.IS_MAC ? GenericTrayIcon.TrayIconType.DEFAULT : GenericTrayIcon.TrayIconType.CUSTOM);
+            systemTray = new GenericTrayIcon(trayIconType,
+                    ResourcesUtil.SYSTEM_TRAY_IMAGE_ICON.getImage(),
+                    FrmMainController.APP_NAME,
+                    this.popupMenu.getCurrentPopupMenu());
             
             //To catch events on the popup menu
             systemTray.setImageAutoSize(true);
@@ -592,7 +610,10 @@ public class FrmMain extends javax.swing.JFrame
             
             try
             {
-                tray.add(systemTray);
+                if (OSUtil.IS_MAC)
+                    tray.add((TrayIcon)systemTray.getCurrentTrayIcon());
+                else
+                    tray.add((JTrayIcon)systemTray.getCurrentTrayIcon());
             }
             catch (Exception e)
             { }
